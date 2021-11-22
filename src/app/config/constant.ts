@@ -19,6 +19,7 @@ export class Constant {
     public Question_API='http://localhost:8080/api/question';
 
     public AssessmentArea_API='http://localhost:8080/api/AssessmentArea';
+
     public AssessmentQuestions_API='http://localhost:8080/api/QuestionAssessment';
 
     // public Category_API="http://localhost:8080/api/Category"
