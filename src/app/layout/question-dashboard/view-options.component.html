@@ -1,0 +1,16 @@
+<div class="modal-body">
+    <div class="row">
+        <table class="table table-bordered table-light table-striped table-hover table-borderless">
+            <thead>
+                <th scope="col">{{ 'Maturity_Level' }}</th>
+                <th scope="col">{{ 'Option' }}</th>
+            </thead>
+            <tbody>
+                <tr class="accordion-toggle collapsed" *ngFor="let option of options_arr">
+                    <td>{{ option['Maturity_Level'] }}</td>
+                    <td>{{ option['Option'] }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
