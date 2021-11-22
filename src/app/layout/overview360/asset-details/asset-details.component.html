@@ -1,0 +1,318 @@
+<div [@routerTransition]>
+    <nav class="navbar second-navbar fixed-top navbar-toggleable-md 
+    navbar-expand-lg scrolling-navbar double-nav pm" style="row-gap: 12px;z-index: 800 !important;">
+        <div class="collapse navbar-collapse">
+            <p class="nav2text">{{'360 view' | translate}}</p>
+        </div>
+    </nav>
+    <div *ngIf="errorBool" class="alert alert-danger alert-dismissible fade show alertcls" role="alert">
+        <span style="color: white;">{{'alert' |translate}}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeAlert()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <!-- header  -->
+    <div class="row rowgapmargincls">
+        <div class="col-xl-12 backclass" [style]="errorBool ? 'margin-top:10px' : 'margin-top: 60px;' "
+            style="margin-left: 7px;">
+            <div class=" row" class="topbar">
+                <div class="bar1">
+                    <button type="button" class="btnimg" (click)="onBack()">
+                        <img src="assets/images/Single Arrow.png" alt="">
+                    </button>
+                    <img src="assets/images/pump.png" class="pumpimgcls" alt="">
+                    <div class="child" class="pumpimgchildcls">
+                        <p class="childhead">{{'assetidCamel' | translate}}</p>
+                        <p class="childsubhead">{{asset_id}}</p>
+                    </div>
+                    <div class="child">
+                        <p class="childhead">{{'nameCamel'|translate}}</p>
+                        <p class="childsubhead">{{asset_name}}</p>
+                    </div>
+                    <div class="child" style="margin-left:30px">
+                        <p class="childhead">{{'typeCamel'|translate}}</p>
+                        <p class="childsubhead">{{asset_type}}</p>
+                    </div>
+                    <button class="btn Arbtn"><a style="color: white;" target="_blank" href={{arvrApi}}>
+                            <img src="assets/images/3d.png" class="arcls" alt="">
+                            {{'ar view' | translate}}
+                        </a></button>
+                </div>
+                <button class="btn btn-primary topbarbtn" (click)="setDiv(1)"
+                    [class]=" divnumber === 1 ? 'activeclass' : '' ">
+                    {{'overviewcaps' | translate}}
+                </button>
+                <button class="btn btn-primary topbarbtn" (click)="setDiv(2)"
+                    [class]=" divnumber === 2 ? 'activeclass' : '' ">
+                    {{'maintenance' |translate}}
+                </button>
+                <button class="btn btn-primary topbarbtn" (click)="setDiv(3)"
+                    [class]=" divnumber === 3 ? 'activeclass' : '' ">
+                    {{'event' |translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview Div -->
+    <div class="row rowgapmargincls1" *ngIf="divnumber == 1">
+        <div class="col-xl-6">
+            <div class="tablehead" style="margin-right: 15px;">
+                <p class="datatext">{{'livedata' |translate}} ({{timestamp | date:'dd-MM-yyyy HH:mm:ss.SS'}}) </p>
+                <div class="mapviewbtn">
+                    {{'auto refresh' |translate}} &nbsp;
+                    <mat-slide-toggle name="autorefresh" #autorefresh="ngModel" [(ngModel)]="autoRefresh"
+                        color="primary" (change)="getLiveData(asset_type_id)"></mat-slide-toggle>
+                    <img role="button" routerLink="/graph" [queryParams]="{asset_id: asset_id}"
+                        style="margin-left:20px;margin-top:-15px;" src="assets/images/Group 32.png" alt="">
+                </div>
+            </div>
+            <div class="row rowgapmargincls1" style="margin-left: 0px">
+                <div class=" col-xl-4 col-lg-6" *ngFor="let s of colorArray"
+                    style="background-color: white;height: 100px;margin-right: 20px;max-width: 29.8%;margin-bottom: 10px;">
+                    <div style="padding: 10px;text-align: center;">
+                        <div style="color : #343434;font-family: 'Lato', sans-serif;
+                        font-weight: bold;">{{s.tag_name}}</div>
+                        <div [style.color]="s.color">{{s.value | number:'1.1-3'}} {{s.unit }} &nbsp;
+                            <span *ngIf="s.color === '#D2222D' || s.color === '#FFBF00' " class="">
+                                <!-- if critical condition  -->
+                                <span *ngIf="s.arrow == 'up' ">
+                                    <!-- for up arrow -->
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                </span>
+                                <span *ngIf="s.arrow == 'down' ">
+                                    <!-- for down arrow -->
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </span>
+                                {{s.lessOrMoreVal | number:'1.1-2'}} %
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-6 ">
+            <div class=" tablehead">
+                <p class="datatext">{{'Specifications' | translate}}</p>
+            </div>
+            <table class="table table-hover" style="background-color: #ffff;">
+                <thead>
+                    <th>{{"Component Name" | translate}}</th>
+                    <th>{{'Specification' | translate}}</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of specArray">
+                        <td>{{d.component_name}}</td>
+                        <td>{{d.specification}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Maintenance Div -->
+    <div class="row rowgapmargincls1" *ngIf="divnumber == 2">
+        <div class="col-xl-7">
+            <div class="tablehead">
+                <p class="datatext">{{'Maintenance History' | translate}}
+                    <button type="reset" class="reset" (click)="removeFilter()">{{'remove filter' | translate}}</button>
+                </p>
+                <div class="datebtn">
+                    {{'DATE FILTER' | translate}} &nbsp;
+                    <mat-form-field appearance="fill">
+                        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                            <input matStartDate formControlName="start">
+                            <input matEndDate formControlName="end" (dateChange)="datesUpdated()">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <table class="table table-hover" style="background-color: #ffff;">
+                <thead>
+                    <th>{{'Maintenance Date' | translate}}</th>
+                    <th>{{'Description' | translate}}</th>
+                    <th>{{'Engineer' |translate}}</th>
+                    <th>{{'Maintenance Type' |translate}}</th>
+                    <th>{{'Status' | translate}}</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of maintenanceHistortArray | orderBy:'maintenance_date':true">
+                        <td>{{d.maintenance_date | date:'dd-MM-yyyy HH:mm:ss.SS'}}</td>
+                        <td>{{d.discription}}</td>
+                        <td>{{d.engineer_name}}</td>
+                        <td>{{d.maintenance_type}}</td>
+                        <td style="text-transform: uppercase;">
+                            <label [class]=" d.status === 'closed' ? 'greenlabel' : 'redlabel' ">{{d.status}}</label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-xl-5">
+            <div class="tablehead nextMaintenancehead">
+                <p class="rightMaintext nextMaintenancetext">{{'Next Maintenance' | translate}}</p>
+                <p class="rightMaintext nextMaintenancedata">
+                    {{nextMaintenanceRecord[0].maintenance_date}}
+                    <label class="rightMainlabel">{{nextMaintenanceIn}} {{'days left' |translate}}</label>
+                </p>
+
+            </div>
+            <div style="height: 301px;background-color: #FCFCFC; ">
+                <p class="rightMaintext lastMaintenancetext">{{'Last Maintenance' | translate}}</p>
+                <p class="rightMaintext lastMaintenancedata">
+                    {{lastMaintenanceRecord[0].maintenance_date}}
+                </p>
+                <label class="rightMainlabel2">{{lastMaintenanceAt}} {{'days ago' |translate}}</label>
+                <div class="description">
+                    <p class="lastMaintenancedesc">{{'Description' |translate}}</p>
+                    <div class="rightinnerdiv">
+                        {{lastMaintenanceRecord[0].discription}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Events Div -->
+    <div class="row rowgapmargincls1" *ngIf="divnumber == 3">
+        <div class="col-xl-12">
+            <!-- header  -->
+            <div class="eventhead">
+                <p class="datatext">{{'Event History' | translate}}
+                    <button type="reset" class="reset" (click)="removeEventFilter()">{{'remove filter' |
+                        translate}}</button>
+                </p>
+                <div class="eventSubhead">
+                    <button class="btn btn-primary eventbtn" (click)="setEvent('all')"
+                        [class]=" assetEventStatus == 'all' ? 'activeEventclass' : '' ">
+                        all &nbsp;&nbsp;<span class="badge badge-dark">{{all}}</span>
+                    </button>
+                    <button class="btn btn-primary eventbtn" (click)="setEvent('open')"
+                        [class]=" assetEventStatus == 'open' ? 'activeEventclass' : '' ">
+                        open &nbsp;&nbsp;<span class="badge badge-dark">{{open}}</span>
+                    </button>
+                    <button class="btn btn-primary eventbtn" (click)="setEvent('in-progress')"
+                        [class]=" assetEventStatus == 'in-progress' ? 'activeEventclass' : '' ">
+                        in-progress &nbsp;&nbsp;<span class="badge badge-dark">{{inprogress}}</span>
+                    </button>
+                    <button class="btn btn-primary eventbtn" (click)="setEvent('closed')"
+                        [class]=" assetEventStatus == 'closed' ? 'activeEventclass' : '' ">
+                        closed &nbsp;&nbsp;<span class="badge badge-dark">{{closed}}</span>
+                    </button>
+
+                    <div class="eventdate">
+                        {{'date filter' |translate}} &nbsp;
+                        <mat-form-field appearance="fill">
+                            <mat-date-range-input [formGroup]="event_date" [rangePicker]="picker2">
+                                <input matStartDate formControlName="start">
+                                <input matEndDate formControlName="end" (dateChange)="eventDatesUpdated()">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker2></mat-date-range-picker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!-- table -->
+            <div class="righttable">
+                <table matSort (matSortChange)="sortData($event)" class="table table-hover">
+                    <thead style="text-transform: none;">
+                        <th mat-sort-header="timestamp">{{'Timestamp' | translate}}</th>
+                        <th mat-sort-header="assetid">{{'AssetId' | translate}}</th>
+                        <th mat-sort-header="sensorname">{{'ParameterName' | translate}}</th>
+                        <th mat-sort-header="severity">{{'Severity' | translate}}</th>
+                        <th mat-sort-header="description">{{'Description' | translate}}</th>
+                    </thead>
+                    <tbody>
+                        <ng-container
+                            *ngFor="let e of sortedData | paginate : { itemsPerPage :10, currentPage : p } ">
+                            <tr>
+                                <td>{{e.timestamp | date:'dd-MM-yyyy HH:mm:ss.SS'}}</td>
+                                <td>{{e.assetid}}</td>
+                                <td>{{e.sensorname}}</td>
+                                <td>{{e.severity}}</td>
+                                <td>{{e.description}}</td>
+                            </tr>
+                        </ng-container>
+
+                    </tbody>
+                </table>
+
+                <div class="paginationcls">
+                    <pagination-controls previousLabel="prev" nextLabel="next" (pageChange)="p = $event ">
+                    </pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal left fade" style="margin-top: 25px;" id="chartModal" tabindex="-1" role="dialog"
+    aria-labelledby="chartModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class=" card-header headercls">
+                <div class="row">
+                    <div class=".col-xs-6" style="width: 300px;">
+                        <div class="title" style="color:white;">{{'KPI' |translate}} {{labelName}}</div>
+                    </div>
+                    <div>
+                        <button type="button" class="close cancelbtncls" aria-label="Close" data-dismiss="modal"
+                            (click)="cancelChart()"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body ">
+                <div class="col-xl-8 col-lg-6">
+                    <div class="card mb-3" style="width: 900px;">
+                        <div class="card-header chartbody">
+                            <button style="margin-left: 5px;" class="btn chartbuttonclass"
+                                (click)="assignDuration('5min')" [class]="duration=='5min' ? 'chartActiveBtnClass': '' "
+                                style="background-color:cornsilk;">{{'5m' |translate}}</button>
+                            <button class="btn chartbuttonclass" (click)="assignDuration('10min')"
+                                style="background-color:rgb(252, 227, 195);"
+                                [class]="duration=='10min' ? 'chartActiveBtnClass': '' ">{{'10m' | translate}}</button>
+                            <button class="btn chartbuttonclass" style="background-color: rgb(247, 239, 230);"
+                                (click)="assignDuration('30min')"
+                                [class]="duration=='30min' ? 'chartActiveBtnClass': '' ">{{'30m' |translate}}</button>
+                            <mat-form-field style="margin-left: 20px;" appearance="fill" [formGroup]="dateTime">
+                                <input matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time"
+                                    formControlName="dt" (dateChange)="setMinimumDate()">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #pickerFrom [enableMeridian]="true">
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="fill" [formGroup]="dateTime">
+                                <input matInput [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time"
+                                    formControlName="enddt" [min]="minDate" [max]="maxDate"
+                                    (dateChange)="assignDuration('custom')">
+                                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #pickerTo [enableMeridian]="true">
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+                            <!-- </div> -->
+
+                        </div>
+                        <div class="card-body">
+                            <canvas [chartType]="'line'" [datasets]="lineChartDataAssign"
+                                [labels]="lineChartLabelAssign" [legend]="lineChartLegend" [options]="lineChartOptions"
+                                baseChart height="100px">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

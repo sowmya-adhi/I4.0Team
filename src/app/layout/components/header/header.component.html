@@ -1,0 +1,166 @@
+<div [@routerTransition]>
+    <div class="navbar navbar-toggleable-md navbar-expand-lg fixed-top scrolling-navbar double-nav front"
+        style="height: 10%;z-index: 900  !important;">
+        <a class="navbar-brand">
+            <img src="assets/LTI_Lets_solve_logo_png/LTI_Lets_solve_logo_png.png" style="position: absolute;          width: 80px;
+            height: 64.6px; left:60px; top:0px">
+            &nbsp;
+            <a class="i40assessment">Industry 4.0 Maturity Assessment Tool</a>
+        </a>
+        <button (click)="toggleSidebar()" class="navbar-toggler" type="button">
+
+            <i aria-hidden="true" class="fa fa-bars text-muted"></i>
+        </button>
+        &nbsp;
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="collapse navbar-collapse">
+            <!--<a href={{twinapp}} target="_blank" style="color: black;">
+                <span>TWIN</span>
+            </a>
+            &nbsp;
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
+
+            <a>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle shadow-none" type="button" data-toggle="dropdown">
+                        <span>APPS</span>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li *ngFor="let datas of fetchdata" style="width: 200px;">
+                            <a class="dropdown-item" href="{{datas.appUrl}}">
+                                {{datas.appName}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </a>
+
+            &nbsp;
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
+
+
+            <a style="color: black;">
+                <span>SETTINGS</span>
+            </a>
+
+            &nbsp;
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;
+
+            <a style="color: black;">
+                <span>HELP</span>
+            </a> -->
+
+            <ul class="navbar-nav ml-auto">
+                &nbsp;
+                &nbsp;
+
+                <!-- <li class="nav-item dropdown" ngbDropdown>
+                <button style="border: none;background-color: white;" data-toggle="modal" data-target="#notification">
+                    <mat-icon matBadge="5" mat-raised-button matBadgeSize="medium" matBadgeColor="warn"
+                     style="margin-top: 7px;">notifications</mat-icon>
+                </button>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)">
+                        <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
+                    </a>
+                    <a (click)="onLoggedout()" [routerLink]="['/login']" class="dropdown-item">
+                        <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
+                    </a>
+                </div>
+            </li> -->
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle style="color: black;"
+                        (click)="getLatestEvent()">
+                        <mat-icon matBadge="{{eventCount}}" mat-raised-button matBadgeSize="small" matBadgeColor="warn"
+                            style="margin-right: 7px;">notifications</mat-icon>
+                    </a>
+                    <div class="dropdown-menu-right" ngbDropdownMenu>
+                        <a *ngFor="let e of eventArray" class="dropdown-item" href="javascript:void(0)"style="width: 300px">
+                            <div style="cursor: default;white-space:normal;" title="severity : {{e['severity']}}">
+                                <em *ngIf="e['severity'] == 'high'" title="severity : {{e['severity']}}"  class="fa fa-exclamation-triangle" style="color: #eba834;"></em>
+                                <em *ngIf="e['severity'] == 'low'" title="severity : {{e['severity']}}" class="fa fa-exclamation-triangle displaytext" style="color: #59AA74;"></em>
+                                <em *ngIf="e['severity'] == 'critical'" title="severity : {{e['severity']}}" class="fa fa-exclamation-triangle displaytext"style="color: #f57564;"></em>
+                                {{e['description']}}
+                                <button title="for more info click here" style="border: none;color: blue;background-color: white;cursor: pointer;"
+                                    routerLink="/alert">...</button>
+                            </div>
+                            <hr>
+                        </a>
+
+                    </div>
+                </li>
+
+                &nbsp;
+                &nbsp;
+
+                <li class="nav-item dropdown" ngbDropdown>
+                    <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle style="color: black; ">
+                        <i class="fa fa-user-circle-o" aria-hidden="true"
+                            style="color: black;margin-top: 10px;font-size: medium;"></i> {{userName}} <b
+                            class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu-right" ngbDropdownMenu>
+                        <a class="dropdown-item" href="javascript:void(0)">
+                            <i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}
+                        </a>
+                        <a (click)="onLoggedout()" [routerLink]="['/login']" class="dropdown-item">
+                            <i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div> 
+
+    <!-- notification popup -->
+    <div class="modal left fade" id="notification" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="right: 0;">
+        <div class="modal-dialog" style="right: 0;" role="document">
+            <div class="modal-content" style="right: 0;">
+                <div class=" card-header">
+                    Severity Count<i class="fa fa-close" style="margin-left: 330px;cursor: pointer;font-size:36px"
+                        data-dismiss="modal"></i>
+                </div>
+                <div class="card-body">
+                    <table width="100%">
+                        <tr
+                            style=" height:80px;border: 2px solid white;background-color: rgb(185, 245, 67);color: white;">
+                            <td style="padding-left: 60px;font-size: 19px;">Low Severity : 3</td>
+                            <td><a role="button" routerLink="/alert" style="margin-left: 70px;"
+                                    data-dismiss="modal">More Info..</a></td>
+                        </tr>
+                        <tr
+                            style="height:80px;border: 2px solid white;background-color: rgb(238, 227, 79);color: white;text-align: justify;">
+                            <td style="padding-left: 60px;font-size: 19px;">Critical : 5</td>
+                            <td><a role="button" routerLink="/alert" style="margin-left: 70px;"
+                                    data-dismiss="modal">More Info..</a></td>
+                        </tr>
+                        <tr
+                            style="height:80px;border: 2px solid white;background-color: rgb(245, 143, 143);color: white;text-align: justify;">
+                            <td style="padding-left: 60px;font-size: 19px;">High Severity: 1</td>
+                            <td><a role="button" routerLink="/alert" style="margin-left: 70px;"
+                                    data-dismiss="modal">More Info..</a></td>
+                        </tr>
+                    </table>
+
+
+
+
+
+                    <!-- <div class="modal-footer bg-light editFooter">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Cancel' | translate}}</button>
+        <form (submit)="$event.preventDefault()">
+          <button type="button" class="btn btn-success" data-dismiss="modal">{{'Save' | translate}}</button>
+        </form>
+      </div> -->
+                </div>
+            </div>
+        </div>

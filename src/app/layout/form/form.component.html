@@ -1,0 +1,173 @@
+<!-- <div [@routerTransition]>
+  <!-- <nav class="navbar second-navbar fixed-top navbar-toggleable-md 
+    navbar-expand-lg scrolling-navbar double-nav pm rowgapindex">
+    <div class="collapse navbar-collapse">
+      <p class="nav2text">{{ 'I4.0 Maturity Assessment Tool' | translate }}</p>
+    </div>
+  </nav>
+  <br> 
+  <div class="row card-header nav2">
+    <div>
+        <h5 class="twinname">
+            {{'TWIN' | translate}}
+        </h5>
+    </div>
+    <div>
+        <h5 class="pipesymbol">
+            |
+        </h5>
+    </div>
+    <div style="margin-left: 40px;">
+        <a>
+            <button class="navbutton" (click)=setActiveDiv(1) [class]=" userBool ? 'activeclass' : '' ">
+                <h5 class="nav2text">{{'ASSET TYPE' | translate}}</h5>
+            </button>
+        </a>
+    </div>
+    <div style="margin-left: 40px;">
+        <a><button class="navbutton" (click)=setActiveDiv(2) [class]=" scopeBool ? 'activeclass' : '' ">
+                <h5 class="nav2text">{{'ASSET' | translate}}</h5>
+            </button></a>
+    </div>
+    <div style="margin-left: 40px;">
+        <a><button class="navbutton" (click)=setActiveDiv(3) [class]=" roleBool ? 'activeclass' : '' ">
+                <h5 class="nav2text">{{'ASSET HIERARCHY' | translate}}</h5>
+            </button></a>
+    </div>
+</div>
+  
+  <span class="border-bottom-0">
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">1) Your organization has identified a business use case for managing and
+        analyzing IOT Data?</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+        placeholder="Type you answer here"></textarea>
+    </div>
+  </span>
+  <span class="border-bottom-0">
+    <label for="exampleFormControlCheck">2) Your organization has identified a business use case for managing and
+      analyzing IOT Data?</label>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="option1">
+      <label class="form-check-label" for="option1">
+        Option 1
+      </label><br>
+      <input class="form-check-input" type="checkbox" value="" id="option2">
+      <label class="form-check-label" for="option2">
+        Option 2
+      </label><br>
+      <input class="form-check-input" type="checkbox" value="" id="option3">
+      <label class="form-check-label" for="option3">
+        Option 3
+      </label><br>
+      <input class="form-check-input" type="checkbox" value="" id="option4">
+      <label class="form-check-label" for="option4">
+        Option 4
+      </label><br>
+    </div>
+  </span><br>
+  <span class="border-bottom-0">
+    <label for="exampleFormControlRadio">3) Your organization has identified a business use case for managing and
+      analyzing IOT Data?</label>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+      <label class="form-check-label" for="option1">
+        Option 1
+      </label><br>
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option2" checked>
+      <label class="form-check-label" for="option2">
+        Option 2
+      </label><br>
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option3" checked>
+      <label class="form-check-label" for="option3">
+        Option 3
+      </label><br>
+      <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option4" checked>
+      <label class="form-check-label" for="option4">
+        Option 4
+      </label><br>
+    </div>
+  </span><br>
+
+  <span class="border-bottom-0">
+    <label for="exampleFormControlDropdown">4) Your organization has identified a business use case for managing and
+      analyzing IOT Data?</label>
+    <select class="form-control">
+      <option>Option 1</option><br>
+      <option>Option 2</option><br>
+      <option>Option 3</option><br>
+      <option>Option 4</option><br>
+    </select>
+  </span><br>
+  <span class="border-bottom-0">
+    <label for="exampleFormControlFile">5) Your organization has identified a business use case for managing and
+      analyzing IOT Data?</label>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="customFile">
+      <label class="custom-file-label" for="customFile">Choose file</label>
+    </div>
+  </span><br>
+  <br>
+  <center><button class="btn btn-primary" style="width: 200px;height: 40px;" type="submit">Next</button></center>
+</div> -->
+<div [@routerTransition]>
+  <div class="row card-header nav2">
+    <div>
+      <h5 class="twinname">
+        {{'ASSESSMENT' | translate}}
+      </h5>
+    </div>
+    <div>
+      <h5 class="pipesymbol">
+        |
+      </h5>
+    </div>
+    <div style="margin-left: 40px;">
+      <a>
+        <button class="navbutton" (click)=setActiveDiv(1) [class]=" organizational ? 'activeclass' : '' ">
+          <h5 class="nav2text">{{'ORGANIZATIONAL READINESS' | translate}}</h5>
+        </button>
+      </a>
+    </div>
+    <div style="margin-left: 40px;">
+      <a><button class="navbutton" (click)=setActiveDiv(2) [class]=" data ? 'activeclass' : '' ">
+          <h5 class="nav2text">{{'DATA READINESS' | translate}}</h5>
+        </button></a>
+    </div>
+    <div style="margin-left: 40px;">
+      <a><button class="navbutton" (click)=setActiveDiv(3) [class]=" infrastructure ? 'activeclass' : '' ">
+          <h5 class="nav2text">{{'INFRASTRUCTURE READINESS' | translate}}</h5>
+        </button></a>
+    </div>
+    <div style="margin-left: 40px;">
+      <a><button class="navbutton" (click)=setActiveDiv(4) [class]=" analytics ? 'activeclass' : '' ">
+          <h5 class="nav2text">{{'ANALYTICS READINESS' | translate}}</h5>
+        </button></a>
+    </div>
+    <div style="margin-left: 40px;">
+      <a><button class="navbutton" (click)=setActiveDiv(5) [class]=" itOperations ? 'activeclass' : '' ">
+          <h5 class="nav2text">{{'IT & OPERATIONS READINESS' | translate}}</h5>
+        </button></a>
+    </div>
+  </div>
+  <div *ngIf="organizational">
+    <app-readiness-org></app-readiness-org>
+  </div>
+
+  <div *ngIf="data">
+    <app-readiness-org></app-readiness-org>
+  </div>
+
+  <div *ngIf="infrastructure">
+    <app-readiness-org></app-readiness-org>
+  </div>
+
+  <div *ngIf="analytics">
+    <app-readiness-org></app-readiness-org>
+  </div>
+
+  <div *ngIf="itOperations">
+    <app-readiness-org></app-readiness-org>
+  </div>
+
+</div>

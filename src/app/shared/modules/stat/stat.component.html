@@ -1,0 +1,83 @@
+<div class="card text-black bg-{{ bgClass }}" >
+    <div class="card-body">
+        <div class="row">
+            <div class="col col-xs-3">
+                <img src="https://15.206.99.16:8803/application-registry-service/api/app-registry/download-icon/{{ icon }}" style="text-align: left;color: rgba(0,111,186,1); border:1px gray solid;padding: 5%;">
+            </div>
+            <!-- <div class="col col-xs-9 text-right">
+                <div type="{{type}}" class="btn btn-demo {{label}}" data-toggle="modal" data-target="#exampleModal1">
+                    <i class="fa fa-info-circle fa-1x" style="color: orange;"></i>
+                </div>               
+            </div> -->
+        </div>
+
+        <!-- <div class="row">
+            <div class="col col-xs-3" >
+                <a href="{{link}}" target="_blank" value="{{label}}"
+                style="font-weight: bold;font-size: 16px;"> {{ label }}</a>
+             
+            </div>
+            
+        </div> -->
+      
+       
+    <div class="row">
+        <div class="col col-xs-3"> {{(showMore) ? data : data | slice:0:80}} <span *ngIf="!showMore"></span> 
+            <a href="javascript:;" *ngIf="!showMore" (click)="showMore=true">....</a></div>
+    </div>
+</div>
+
+</div>
+  <!-- Modal -->
+  <div class="modal left fade"  id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-body" >
+               
+                    <div class=" row bg-white" >
+                        <div class=".col-xs-6" style="margin-left: 3%;">                
+                            <i class="fa {{ icon }} fa-2x" style="color: blue;"></i>                           
+                        </div> 
+                        <div class="col col-xs-4" >                             
+                           <div class="d-block"  >{{ label }}</div>               
+                        </div> 
+                        
+                        <div class="col col-xs-9 text-right">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" 
+                           style="color: blue; background-color: transparent; border-color: white;">&#x2715;</button>
+                        </div>                           
+                    </div>
+                   
+                    <div class="card-body bg-light"  >    
+                    <div class=".col-xl-6">
+                        <img src= "{{image}}" class="img-fluid">  
+                    </div><hr>
+                    <div class=".col-xl-6 ">
+                        <div class="card-header">
+                            <div class="d-block">Description
+                            </div>
+                        </div>                         
+                        <div class="card-footer">
+                            <div class="d-block">{{data}}</div>
+                        </div>
+                    </div><hr>
+                    <div class=".col-xl-6" >
+                        <div class="card-header"><div class="d-block">KPI's of the Solution</div></div>
+                        
+                        <div class="card-footer">
+                            <div class="d-block">{{kpi}}</div> 
+
+                        </div>
+                    </div>
+                </div>  
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

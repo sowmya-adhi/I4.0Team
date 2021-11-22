@@ -1,0 +1,113 @@
+<p>admindashboard works!</p>
+<div class="row rowgapcls" [style]="errorBool ? 'margin-top:10px' : 'margin-top: 60px;' ">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-header leftCardHeader">
+                <p class="overviewtext">{{'ADMIN OPTIONS' |translate}}</p>
+            </div>
+
+        </div>
+
+        <div class="parent">
+            <div class="leftscroll">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <!-- header -->
+        <div class="row rowgapcls">
+            <div class="row col-xl-12 col-lg-12">
+                <div class="card-header rightheader">
+                    <p class="pumpaligncls">ASSESSMENT RESULTS</p> 
+                </div>
+                <div class="btn-group">
+                    <button class="button">Recent</button>
+                    <button class="button">All</button>
+                  </div>
+            </div>
+        </div>
+
+        <div>
+            <!-- table -->
+            <div class="righttable">
+                <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 60px;">
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto horizontal">
+
+                        <li>
+                            <button class="paramBtn mr-2" class="activeParameter">
+                                All
+                            </button>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav> -->
+                <table id="dtTable" class="table table-hover">
+
+                    <thead>
+                        <th>{{'ASSESS ID'|translate}}</th>
+                        <th>{{'NAME'|translate}}</th>
+                        <th>{{'ORGANIZATION'|translate}}</th>
+                        <th>{{'SCORE'|translate}}</th>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a style="color: #000E8C;" routerLink="/result">0001</a>
+                            </td>
+                            <td>Nikhil</td>
+                            <td>Honda</td>
+                            <td>87.5</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a style="color: #000E8C;" routerLink="/form">0002</a>
+                            </td>
+                            <td>Leka</td>
+                            <td>Citi</td>
+                            <td>92</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a style="color: #000E8C;" routerLink="/form">0003</a>
+                            </td>
+                            <td>Karan</td>
+                            <td>Honda</td>
+                            <td>56</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a style="color: #000E8C;" routerLink="/form">0004</a>
+                            </td>
+                            <td>William</td>
+                            <td>Chevron</td>
+                            <td>78</td>
+                        </tr>
+                    </tbody>
+                    <!-- <tbody>
+                    <tr
+                        *ngFor="let d of assessData | paginate : { itemsPerPage : 10, currentPage : p } | filter : searchText">
+                        <td class="tdAsset_id">
+                            <a style="color: #000E8C;" routerLink="/form"
+                                [queryParams]="{assess_id:d.assess_id}"
+                                routerLinkActive="active">{{d.assess_id}}</a>
+                        </td>
+                        <td>{{d.name}}</td>
+                        <td>{{d.organization}}</td>
+                        <td>{{d.score}}</td>
+                    </tr>
+                </tbody> -->
+                </table>
+
+                <div class="paginationcls">
+                    <pagination-controls previousLabel="prev" nextLabel="next" (pageChange)="p = $event ">
+                    </pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

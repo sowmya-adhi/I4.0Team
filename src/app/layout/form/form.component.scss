@@ -1,0 +1,85 @@
+.modal.left .modal-dialog {
+	position:fixed;
+	right: 0;
+	margin: auto;
+	max-width: 50% !important;
+	height: 100% ;
+	-webkit-transform: translate3d(0%, 0, 0);
+	-ms-transform: translate3d(0%, 0, 0);
+	-o-transform: translate3d(0%, 0, 0);
+	transform: translate3d(0%, 0, 0);
+	
+}
+.modal.left .modal-content {
+	height: 100%;
+	//overflow-y: scroll;
+	width: 600px;
+}
+.modal.right.fade .modal-dialog {
+	//left: 320px;
+	-webkit-transition: opacity 0.3s linear, left 0.3s ease-out;
+	-moz-transition: opacity 0.3s linear, left 0.3s ease-out;
+	-o-transition: opacity 0.3s linear, left 0.3s ease-out;
+	transition: opacity 0.3s linear, left 0.3s ease-out;
+}
+
+
+
+/* ----- MODAL STYLE ----- */
+
+.btn-demo {
+	
+	font-size: 16px;  
+    text-decoration: none;
+}
+.card-body{
+overflow-y: auto;
+}
+
+h5{
+    color: white;
+    font-size: 14px;
+    text-transform: uppercase;
+    
+}
+card-header{
+    width: 100%;
+    margin-left: 0px;
+    position: fixed;
+}
+.navbutton{
+    background-color: #006FBA;
+    border: none;
+    font-family: 'Lato',sans-serif;
+    font-weight:normal;
+    font-size: 14px;
+    line-height: 15px;
+    opacity: 1;
+    padding-bottom: 0px;
+    border-radius: 0px;
+    width: 140px;
+}
+.activeclass {
+    color: #fed400;
+    border-bottom: 4px solid #fed400;
+}
+*:focus {
+    outline: 0 !important;
+}
+
+.nav2 {
+    background: #006FBA;height: 80px;margin-top: 4%;
+}
+
+.twinname {
+    margin-left:40px;margin-top: 12px;
+}
+.pipesymbol {
+    font-size: 50px; color:black;text-transform: lowercase; margin-left:35px;margin-top: 10px;
+}
+.nav2text {
+    text-transform: uppercase;margin-top: 10px;
+}
+.userBoolClass {
+    margin-right: 3%; margin-left: 3%;margin-top: 1%;
+  }

@@ -1,0 +1,84 @@
+//$topnav-background-color: #222;
+$topnav-background-color: white;
+
+.i40assessment{
+    position: absolute;
+    width: 426px;
+    height: 30px;
+    left: 145px;
+    top: 10px;
+font-family: Lato;
+font-style: normal;
+font-weight: bold;
+font-size:20px;
+line-height: 30px;
+/* identical to box height */
+
+display: flex;
+align-items: center;
+
+color: #000000;
+}
+
+.front{
+    z-index: 2000 !important;
+}
+
+
+/* Bootstrap 4 text input with search icon */
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+    position: fixed;
+    z-index: 1;
+    display: block;
+    width: 2.375rem;
+   // height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+:host {
+    .navbar {
+        background-color: $topnav-background-color;
+
+        .navbar-brand {
+            color: black;
+            margin-left: 1%;
+        }
+
+        .nav-item > a {
+            color:black;
+
+            &:hover {
+                color: #999;
+            }
+        }
+    }
+
+}
+
+a:hover{
+    background-color: white;
+}
+*:focus{
+    outline: 0 !important;
+}
+.dropdown-menu-right {         
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+}
+  
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+

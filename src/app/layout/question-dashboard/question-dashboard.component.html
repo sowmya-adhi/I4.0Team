@@ -1,0 +1,92 @@
+<br>
+<!-- <h1>question-dashboard works!</h1> -->
+<div class="container justify-content-center">
+    <!-- <div class="row">
+         <div class="col-9">
+            <h1>Question Dashboard</h1>
+        </div> 
+        <div class="col-3">
+            <button type="button" class="btn btn-primary" (click)="openFormModal()">
+                <i class="fa fa-plus-square"></i> Create New Question
+            </button>
+        </div>
+    </div> -->
+    <div class="row">
+        <!-- <div class="col-4" >
+            <h2>Area Filter</h2>
+        </div> -->
+        <div class="col-3" style="margin-right:20%;">
+            <select
+                class="custom-select"
+                (change)="AreaChanged($any($event.target).value)"
+            >
+                <option *ngFor="let area of area_arr" [value]="area['Assessment_Area']">{{ area['Assessment_Area'] }}</option>
+            </select>
+        </div>
+        <!-- <div class="col-2">
+            <h2>Category Filter</h2>
+        </div> -->
+        <div class="col-2" style="margin-right:20%;">
+            <select
+                class="custom-select"
+                (change)="CategoryChanged($any($event.target).value)"
+            >
+                <option *ngFor="let category of categories" [value]="category['CategoryName']">{{ category['CategoryName'] }}</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary" (click)="openFormModal()">
+            <i class="fa fa-plus-square"></i> Create New Question
+        </button>
+       
+    </div><br>
+    <div class="row">
+        <table class="table table-bordered table-light table-striped table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">{{ 'Area' }}</th>
+                    <th scope="col">{{ 'Category' }}</th>
+                    <th scope="col">{{ 'Question' }}</th>
+                    <th scope="col">{{ 'Statement' }}</th>
+                    <!-- <th scope="col">{{ 'Target Score' }}</th> -->
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    class="accordion-toggle collapsed"
+                    id="accordion1"
+                    data-toggle="collapse"
+                    data-parent="#accordion1"
+                    *ngFor="let question of selected_qs"
+                >
+                    <!-- <div *ngFor="let i of [21,2,3,4,4,524]">ahdlasdjlasjd</div> -->
+
+                    <td>{{ question["Area"] }}</td>
+                    <td>{{ question.Category }}</td>
+                    <td>{{ question.Question }}</td>
+                    <td>{{ question["Statement"]}}</td>
+                    <!-- <td>{{ question.Target_Score }}</td> -->
+                    <!-- <td>
+                        <button type="button" class=""  (click)="editdata(question.Key)"
+                          style="outline-color: transparent;border-color: transparent;">
+                          <i class="fa fa-ellipsis-v "></i></button>
+                      </td> -->
+                      <td>
+                        <button  type="button" class="btn btn-danger btn-sm mr-2" data-toggle="modal"
+                          (click)="assignDeleteAssetId(question.Key)">
+                          <i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button class="btn btn-warning btn-sm" 
+                        (click)="editdata(question.Key)"
+                          >
+                          <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                      </td>
+                    <!-- <td>lksj;sdajf;</td>
+                    <td>sl;djf;lsdfjk</td>
+                    <td>slfls;dfk</td>
+                    <td>sf;lsdkf</td>
+                    <td>sdfl'sfldsd</td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

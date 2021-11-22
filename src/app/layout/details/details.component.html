@@ -1,0 +1,67 @@
+<div class="userBoolClass">
+  <div class=".col col-xl-12 text-xs-center" style=" margin-left: 30px; margin-top: 60px; width: 95%;">
+    <div class="card mb-3">
+      <div class="card-header bg-white " style="height: 50px;">
+
+        <h2>
+          <bold>SCHEDULE ASSESSMENT</bold>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;">
+    <div class=".col col-xl-12 text-xs-center">
+      <div class="card mb-3">
+        <div class="card-header bg-white ">
+          <form #detailsForm="ngForm">
+            <div class="row">
+              <div class="col" style="margin-right: 5%;">
+                <label for="res_name">{{'Name of Respondent' | translate}}<span style="color: red;">*</span></label>
+                <input type="text" id="res_name" class="form-control" name="res_name" [(ngModel)]="RESPONDENT.res_name" required>
+              </div>
+
+              <div class="col">
+
+                <label for="organization">{{'Organization' | translate}}<span style="color: red;">*</span></label>
+                <input type="text" id="organization" class="form-control" name="organization"
+                  [(ngModel)]="RESPONDENT.organization" required>
+
+              </div>
+            </div><br>
+            <div class="row">
+              <div class="col" style="margin-right: 5%;">
+                <label for="role">{{'Role or Position' | translate}}<span style="color: red;">*</span></label>
+                <input type="text" id="role" class="form-control" name="role" [(ngModel)]="RESPONDENT.role" required>
+              </div>
+
+              <div class="col">
+
+                <label for="date">{{'Date of assessment' | translate}}<span style="color: red;">*</span></label>
+                <!-- <input type="text" id="date" class="form-control" name="date" [(ngModel)]="RESPONDENT.date" required> -->
+                <!-- <input type="date"  [value]="RESPONDENT.date | date:'yyyy-MM-dd'" (input)="RESPONDENT.date=parseDate($event.target.value)" [(ngModel)]="RESPONDENT.date" required /> -->
+                <input type="date" class="form-control" placeholder="yyyy-mm-dd" name="date" [(ngModel)]="RESPONDENT.date" ngbDatepicker required>
+              </div>
+            </div><br>
+            <div class="row">
+              <div class="col" style="margin-right: 52%;">
+
+                <label for="department">{{'Department'}}<span style="color: red;">*</span></label>
+                <input type="text" id="department" class="form-control" name="department"
+                  [(ngModel)]="RESPONDENT.department" required>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-success" style="font: normal normal bold 12px/15px Lato; width: 20%;"
+                  (click)="gotoAssessment()">
+                  {{'Next' | translate}}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

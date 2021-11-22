@@ -1,0 +1,117 @@
+<div [@routerTransition]>
+    <nav class="navbar second-navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav pm" style="z-index: 800 !important;">
+        <div class="collapse navbar-collapse">
+            <button type="button" routerLink="/asset_details" [queryParams]="{asset_id:asset_id}" class="btnimg">
+                <img src="assets/images/whiteSingle Arrow.png" alt="">
+            </button>
+            <p class="nav2text uppercase">{{'360 view' | translate}}</p>
+        </div>
+
+        <mat-form-field appearance="outline" [formGroup]="dateTime" style="margin-bottom: 2.5px;">
+            <input matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time" formControlName="dt"
+                (dateChange)="setMinimumDate()">
+            <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #pickerFrom [enableMeridian]="true">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" [formGroup]="dateTime" style="margin-bottom: 2.5px;">
+            <input matInput [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time" formControlName="enddt"
+                [min]="minDate" [max]="maxDate" (dateChange)="assignDuration('custom')">
+            <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #pickerTo [enableMeridian]="true">
+            </ngx-mat-datetime-picker>
+        </mat-form-field>
+
+        <select #duration class="form-control duration" name="duration" (change)="assignDuration(duration.value)">
+            <option value="5 Min" selected>5 Min</option>
+            <option value="10 Min">10 Min</option>
+            <option value="30 Min">30 Min</option>
+        </select>
+    </nav>
+    <!-- <div class="row mt-5">
+        <div class="col-xl-6">
+            <div class="card" style="height: 270px;">
+                <div class="card-body" >
+                    <p class="header-text">{{'Comparision' | translate}}</p>
+                    <select #param1 class="form-control param1" name="param1" (change)="selectParam1(param1.value)">
+                        <option *ngFor="let k of kpiList" [value]="k.tag">
+                            {{k.tag_name}}
+                        </option>
+                    </select>
+                    <p class="vstext">V<sub>s</sub></p>
+                    <select #param2 class="form-control param2" name="param2" (change)="selectParam2(param2.value)">
+                        <option *ngFor="let k of kpiList" [value]="k.tag">
+                            {{k.tag_name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <canvas (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)" [chartType]="'line'"
+                        [datasets]="lineChartDataAssignComp" [labels]="lineChartLabelAssignComp" [legend]="lineChartLegend"
+                        [options]="lineChartOptions" baseChart height="130px">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="row mt-5 ">
+        <div class="col-xl-12">
+            <div class="card rowgap">
+                <div class="card-header" style="background-color: white;height: 60px;">
+                    <p class="header-text" >{{'Comparision' | translate}}</p>
+
+                    <mat-list-item class="primary-imenu-item" role="listitem" style="float: right;margin-top: -42px;margin-left: 500px;">
+                        <mat-form-field class="select-form">
+                            <mat-select placeholder="KPI List" name="kpi" class="filter-select"
+                                [(ngModel)]="selectedKpi" [compareWith]="equals" multiple #kpiSelect>
+                                <mat-option *ngFor="let kpi of kpiList" [value]="kpi" (click)="selectedKpiList()">
+                                    {{kpi.tag_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-list-item>
+
+                    <!-- <select #param1 class="form-control param1" name="param1" (change)="selectParam1(param1.value)">
+                        <option *ngFor="let k of kpiList" [value]="k.tag" >
+                            {{k.tag_name}}
+                        </option>
+                    </select>
+                    <p class="vstext">V<sub>s</sub></p>
+                    <select #param2 class="form-control param2" name="param2" (change)="selectParam2(param2.value)">
+                        <option *ngFor="let k of kpiList" [value]="k.tag">
+                            {{k.tag_name}}
+                        </option>
+                    </select> -->
+                </div>
+                <div class="card-body">
+                    <canvas (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)" [chartType]="'line'"
+                        [datasets]="lineChartDataAssignComp" [labels]="lineChartLabelAssignComp"
+                        [legend]="lineChartLegend" [options]="lineChartOptions" baseChart height="70px">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-xl-6 mb-2" *ngFor="let k of kpiLineChartArray">
+            <div class="card">
+                <div class="card-header" style="background-color: white;color : #343434;
+                font-family: 'Lato', sans-serif;font-weight: bold;">
+                    {{k.header}}
+                </div>
+                <div class="card-body">
+                    <canvas (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)" [chartType]="'line'"
+                        [datasets]="k.lineChartDataAssign" [labels]="k.lineChartLabelAssign" [legend]="lineChartLegend"
+                        [options]="lineChartOptions" baseChart height="130px">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,329 @@
+<div [@routerTransition]>
+    <nav class="navbar second-navbar fixed-top navbar-toggleable-md 
+    navbar-expand-lg scrolling-navbar double-nav pm rowgapindex" style="z-index: 800 !important;">
+        <button type="button" routerLink="/overview360" class="btnimg">
+            <img src="assets/images/whiteSingle Arrow.png" alt="">
+        </button>
+        <div class="collapse navbar-collapse">
+            <p class="nav2text">{{'Alert Dashboard' | translate}}</p>
+        </div>
+    </nav>
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header" style="background-color: white;color : #343434;
+                font-family: 'Lato', sans-serif;font-weight: bold;">
+                    <div class="row">
+                        <div class="col-xl-2">
+                            <label>{{'Severity' | translate}}:</label>
+                            <button type="reset" class="reset" (click)="removeFilter()">{{'remove filter' |
+                                translate}}</button>
+                        </div>
+                        <div class="col-xl-2">
+                            <label>{{'AssetType' | translate}}:</label>
+                            <button type="reset" class="reset" (click)="removeFilter()">{{'remove filter' |
+                                translate}}</button>
+                        </div>
+                        <div *ngIf="assetBoolean" class="col-xl-2">
+                            <label>{{'Asset' | translate}}:</label>
+                            <button type="reset" class="reset" (click)="removeFilter()">{{'remove filter' |
+                                translate}}</button>
+                        </div>
+                        <div *ngIf="assetBoolean" class="col-xl-2">
+                            <label>{{'ParameterName' | translate}}:</label>
+                            <button type="reset" class="reset" (click)="removeFilter()">{{'remove filter' |
+                                translate}}</button>
+                        </div>
+                        <div class="col-xl-2">
+                            <label>{{'Start' | translate}}:</label>
+                            <button type="reset" class="reset" (click)="removeFilter()">{{'remove filter' |
+                                translate}}</button>
+                        </div>
+                        <div class="col-xl-2">
+                            <label>{{'End' | translate}}:</label>
+                            <button type="reset" class="reset" (click)="removeFilter()">{{'remove filter' |
+                                translate}}</button>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-2">
+                            <select #severityy="ngModel" [(ngModel)]="severity" class="form-control assettype"
+                                name="severity" (change)="onChangeSeverity(severityy.value)">
+                                <option value="all" selected>{{'ALL' | translate}}</option>
+                                <option value="low">{{'Low' | translate}}</option>
+                                <option value="critical">{{'Critical' | translate}}</option>
+                                <option value="high">{{'High' | translate}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-2">
+                            <select #type="ngModel" [(ngModel)]="assettype" class="form-control assettype"
+                                name="assettype" (change)="onChangeAssetType(type.value)">
+                                <option value="all" selected>{{'ALL' | translate}}</option>
+                                <option *ngFor="let at of AssetTypesArray" value={{at.asset_type_id}}>
+                                    {{at.asset_type_name}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="assetBoolean" class="col-xl-2">
+                            <select #a="ngModel" [(ngModel)]="asset" class="form-control assettype" name="asset"
+                                (change)="onChangeAsset(a.value)">
+                                <option value="all" selected>{{'ALL' | translate}}</option>
+                                <option *ngFor="let at of AssetArray" value={{at.asset_id}}>{{at.asset_name}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="assetBoolean" class="col-xl-2">
+                            <select #sensorvalue="ngModel" [(ngModel)]="sensorname" class="form-control assettype"
+                                name="sensorvalue" (change)="onChangeSensors(sensorvalue.value)">
+                                <option value="all" selected>{{'ALL' | translate}}</option>
+                                <option *ngFor="let at of SensorNamesArray" value={{at}}>{{at}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-xl-2">
+                            <mat-form-field appearance="outline" [formGroup]="dateTime" style="width: 170px">
+                                <input matInput [ngxMatDatetimePicker]="pickerFrom" placeholder="From date & time"
+                                    formControlName="dt" (dateChange)="setMinimumDate()">
+                                <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #pickerFrom [enableMeridian]="true">
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-xl-2">
+                            <mat-form-field appearance="outline" [formGroup]="dateTime" style="width: 170px;">
+                                <input matInput [ngxMatDatetimePicker]="pickerTo" placeholder="To date & time"
+                                    formControlName="enddt" [min]="minDate" [max]="maxDate"
+                                    (dateChange)="assignDuration()">
+                                <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                                <ngx-mat-datetime-picker #pickerTo [enableMeridian]="true">
+                                </ngx-mat-datetime-picker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header" style="background-color: white;color : #343434;
+                font-family: 'Lato', sans-serif;font-weight: bold;">
+                    {{'Based on Asset Types' | translate}}
+                </div>
+                <div class="card-body">
+                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+                        [colors]="pieChartColors" [options]="pieChartOptions" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)" height="130px"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header" style="background-color: white;color : #343434;
+                font-family: 'Lato', sans-serif;font-weight: bold;">
+                    {{'Based on Severity' | translate}}
+                </div>
+                <div class="card-body">
+                    <canvas baseChart [data]="pieChartData1" [labels]="pieChartLabels1" [chartType]="pieChartType"
+                        [colors]="pieChartColors1" [options]="pieChartOptions" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)" height="130px"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-header" style="background-color: white;color : #343434;
+                font-family: 'Lato', sans-serif;font-weight: bold;">
+                    {{'Based on Asset' | translate}}
+                </div>
+                <div class="card-body">
+                    <canvas baseChart (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)"
+                        [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                        [legend]="barChartLegend" [chartType]="barChartType" height="130px">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-header" style="background-color: white;color : #343434;
+                font-family: 'Lato', sans-serif;font-weight: bold;">
+                    {{'Alerts' | translate}}
+                    <div class="searchbtn">
+                        <input type="text" class="searchtextcls" [(ngModel)]="searchText" placeholder="Search..">
+                        <button class="searchbtncls">
+                            <img src="assets/images/search.png">
+                        </button>
+                    </div>
+                    <!-- <div class="eventdate">
+                        {{'date filter' |translate}} &nbsp;
+                        <mat-form-field appearance="fill">
+                            <mat-date-range-input [formGroup]="event_date" [rangePicker]="picker2">
+                                <input matStartDate formControlName="start">
+                                <input matEndDate formControlName="end" (dateChange)="eventDatesUpdated()">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker2></mat-date-range-picker>
+                        </mat-form-field>
+                    </div> -->
+
+                </div>
+                <div class="card-body">
+                    <table matSort (matSortChange)="sortData($event)" class="table table-hover"
+                        style="background-color: #ffff;">
+                        <thead>
+                            <th mat-sort-header="timestamp">{{'Timestamp' | translate}}</th>
+                            <th mat-sort-header="assetid">{{'AssetId' | translate}}</th>
+                            <th mat-sort-header="sensorname">{{'ParameterName' | translate}}</th>
+                            <th mat-sort-header="severity">{{'Severity' | translate}}</th>
+                            <th mat-sort-header="description">{{'Description' | translate}}</th>
+                            <th mat-sort-header="status">{{'Status' | translate}}</th>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let e of sortedData | filter : searchText | paginate : { itemsPerPage : 10, currentPage : p }">
+                                <td>{{e.timestamp | date:'dd-MM-yyyy HH:mm:ss.SS'}}</td>
+                                <td>{{e.assetid}}</td>
+                                <td>{{e.sensorname}}</td>
+                                <td>{{e.severity}}</td>
+                                <td>{{e.description}}</td>
+                                <td *ngIf="e.eventstatus=='open'" style="text-transform: uppercase;">
+                                    <button [disabled]="editBool"
+                                        [class]=" e.eventstatus === 'closed' ? 'greenlabel' : 'redlabel' "
+                                        data-toggle="modal" [attr.data-target]="'#update'+e.event_type+e.timestamp">
+                                        {{e.eventstatus}}
+                                    </button>
+                                </td>
+                                <td *ngIf="e.eventstatus=='in-progress'" style="text-transform: uppercase;">
+                                    <button [disabled]="editBool" class="amberlabel" data-toggle="modal"
+                                        [attr.data-target]="'#update'+e.event_type+e.timestamp">
+                                        {{e.eventstatus}}
+                                    </button>
+                                </td>
+                                <td *ngIf="e.eventstatus=='closed'" style="text-transform: uppercase;cursor: default;">
+                                    <button [class]=" e.eventstatus === 'closed' ? 'greenlabel' : 'redlabel' ">
+                                        {{e.eventstatus}}
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="paginationcls">
+                        <pagination-controls previousLabel="prev" nextLabel="next" (pageChange)="p = $event ">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- update pop up -->
+    <div class="modal left fade" id="update{{e.event_type}}{{e.timestamp}}" tabindex="-1" role="dialog"
+        aria-labelledby="update" aria-hidden="true" *ngFor="let e of sortedData" data-keyboard="false"
+        data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="card-header" style="background-color: #006FBA;">
+                    <div class="row">
+                        <div class="col col-xs-6 font-weight-bold ">
+                            <div class="cardHeaderText">{{'Action' | translate}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form #update="ngForm">
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <label for="assetid">{{'AssetId' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <input type="text" class="form-control" name="assetid" id="assetid"
+                                    [(ngModel)]="e.assetid" #assetid="ngModel" readonly>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <label>{{'Timestamp' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <input type="text" class="form-control" name="timestamp" id="timestamp"
+                                    [(ngModel)]="e.timestamp" #timestamp="ngModel" readonly value="{{e.timestamp}}">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <label>{{'Parameter Name' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <input type="text" class="form-control" name="sname" id="sname" readonly
+                                    [(ngModel)]="e.sensorname" #sname="ngModel">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <label>{{'Sensor Value' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <input type="text" class="form-control" id="svalue" name="svalue" readonly
+                                    [(ngModel)]="e.sensorvalue" #svalue="ngModel">
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <label>{{'Status' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <!-- <input type="text" class="form-control" id="eventstatus" name="eventstatus" readonly
+                                    [(ngModel)]="e.eventstatus" #status="ngModel"> -->
+                                <select class="form-control" id="eventstatus" name="eventstatus"
+                                    [(ngModel)]="e.eventstatus" required>
+                                    <option value="open">{{'Open' | translate}}</option>
+                                    <option value="in-progress">{{'In-progress' | translate}}</option>
+                                    <option value="closed">{{'Closed' | translate}}</option>
+                                </select>
+                            </div>
+                        </div><br>
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <label>{{'Comments' | translate}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <textarea class="form-control" id="comments" name="comments" ngModel #comments="ngModel"
+                                    required rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-8 error" *ngIf="comments.errors && (comments.dirty || comments.touched)">
+                                <p *ngIf="comments.errors.required">
+                                    {{'Comments is a mandatory field' | translate}}
+                                </p>
+                            </div>
+                        </div><br>
+                        <div class="modal-footer bg-light col-xl-8" style="margin-bottom: 10px;">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                (click)="resetForm()">{{'Cancel' | translate}}</button>
+                            <button type="button" class="btn btn-success" [disabled]="!update.valid"
+                                data-dismiss="modal" (click)="updateAlert(update)">{{'Save' | translate}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

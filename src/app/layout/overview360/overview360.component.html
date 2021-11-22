@@ -1,0 +1,168 @@
+<div [@routerTransition]>
+    <nav class="navbar second-navbar fixed-top navbar-toggleable-md 
+    navbar-expand-lg scrolling-navbar double-nav pm rowgapindex">
+        <div class="collapse navbar-collapse">
+            <p class="nav2text">{{ '360 view' | translate }}</p>
+        </div>
+    </nav>
+
+    <div *ngIf="errorBool" alertcls class="alert alert-danger alert-dismissible fade show " role="alert">
+        <span style="color: white;">{{'alert' |translate}}</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closeAlert()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="row rowgapcls" [style]="errorBool ? 'margin-top:10px' : 'margin-top: 60px;' ">
+
+        <!-- left side  -->
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header leftCardHeader">
+                    <p class="overviewtext">{{'overview' |translate}}</p>
+                </div>
+                <div style=" width: 100%;">
+                    <select #selectType class="form-control selectcls" name="selectType"
+                        (change)="assetTypeChange(selectType.value)">
+                        <option value="all" selected>{{'allassettype' | translate}}</option>
+                        <option *ngFor="let f of assetType" [value]="f.type">
+                            {{f.type}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="card-body" style="background-color: white;">
+                    <canvas *ngIf="chartBool" baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
+                        [chartType]="'doughnut'" [plugins]="doughnutChartPlugins" [options]="doughnutChartOptions"
+                        [colors]="doughnutChartColors" height="155px">
+                    </canvas>
+                </div>
+            </div>
+
+            <div class="parent">
+                <div class="leftscroll">
+                    <div class="leftAssets buttonfocus" role="button" (click)="assetTypeChange('all')"
+                        [style.background-color]="allAssetBool ? '#F4F4F4' : '' ">
+                        <div class="bulletlist">
+                            <ul>
+                                <li style="color: black;"></li>
+                            </ul>
+                        </div>
+                        <p class="head">{{'allassets'|translate}}</p>
+                        <P class="subhead">
+                            {{assetLength}}
+                        </P>
+                        <img class="imgarrow" src="assets/images/Single right Arrow.png">
+                    </div>
+                    <div *ngFor="let d of assetType" class="leftAssets buttonfocus" role="button"
+                        (click)="assetTypeChange(d.type)" [style.background-color]="bgcolor== d.type ? '#F4F4F4' : '' ">
+                        <div class="bulletlist">
+                            <ul>
+                                <li [style.color]="d.color"></li>
+                            </ul>
+                        </div>
+                        <p class="head">{{d.type}}</p>
+                        <P class="subhead">{{d.count}}</P>
+                        <img class="imgarrow" src="assets/images/Single right Arrow.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- right side  -->
+        <div class="col-sm-8">
+            <!-- header -->
+            <div class="row rowgapcls">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card-header rightheader">
+                        <p class="pumpaligncls">Pump</p>
+                        <div class="mapviewbtn">
+                            map view &nbsp;
+                            <mat-slide-toggle name="mapview" color="primary" (click)="toggle()"></mat-slide-toggle>
+                        </div>
+                        <div class="searchbtn">
+                            <input type="text" class="searchtextcls" [(ngModel)]="searchText" placeholder="Search..">
+                            <button class="searchbtncls">
+                                <img src="assets/images/search.png">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <!-- table -->
+                <div class="righttable" *ngIf="!show">
+                    <table id="dtTable" class="table table-hover">
+                        <thead>
+                            <th>{{'assetid'|translate}}</th>
+                            <th>{{'name'|translate}}</th>
+                            <th>{{'type'|translate}}</th>
+                            <th>{{'location'|translate}}</th>
+                            <th>{{'make' |translate}}</th>
+                            <th>{{'model'|translate}}</th>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let d of allAssetData | paginate : { itemsPerPage : 10, currentPage : p } | filter : searchText">
+                                <td class="tdAsset_id">
+                                    <a style="color: #000E8C;" routerLink="/asset_details"
+                                        [queryParams]="{asset_id:d.asset_id}"
+                                        routerLinkActive="active">{{d.asset_id}}</a>
+                                </td>
+                                <td>{{d.asset_name}}</td>
+                                <td>{{d.asset_type_name}}</td>
+                                <td>
+                                    <div *ngIf="d.asset_Metadata?.length>0">
+                                        <div *ngFor="let e of d.asset_Metadata">
+                                            <span *ngIf="e.key_name =='Location'">{{e.key_value}}</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="d.asset_Metadata?.length==0">-</div>
+                                </td>
+                                <td>
+                                    <div *ngIf="d.asset_Metadata?.length>0">
+                                        <div *ngFor="let e of d.asset_Metadata">
+                                            <span *ngIf="e.key_name =='Make'">{{e.key_value}}</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="d.asset_Metadata?.length==0">-</div>
+                                </td>
+                                <td>
+                                    <div *ngIf="d.asset_Metadata?.length>0">
+                                        <div *ngFor="let e of d.asset_Metadata">
+                                            <span *ngIf="e.key_name =='Model'">{{e.key_value}}</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="d.asset_Metadata?.length==0">-</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="paginationcls">
+                        <pagination-controls previousLabel="prev" nextLabel="next" (pageChange)="p = $event ">
+                        </pagination-controls>
+                    </div>
+                </div>
+
+                <!-- map -->
+                <div *ngIf="show">
+                    <agm-map [latitude]="13.0827" [longitude]="80.2707" [zoom]="4">
+                        <agm-marker *ngFor="let m of mapData" [iconUrl]="m.iconUrl" [latitude]="m.latitude"
+                            [longitude]="m.longitude">
+                            <agm-info-window #infoWindow>
+                                <p><span style="font-weight: bold;">ID : </span>{{ m.asset_id }}</p>
+                                <p><span style="font-weight: bold;">Name : </span>{{ m.asset_name }}</p>
+                                <p><span style="font-weight: bold;">Type : </span>{{ m.asset_type }}</p>
+                                <p (click)="markerClicked(m)" style="color: blue; text-decoration: underline;cursor: pointer; margin: auto;">
+                                    More Info..
+                                </p>
+                            </agm-info-window>
+                        </agm-marker>
+                    </agm-map>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

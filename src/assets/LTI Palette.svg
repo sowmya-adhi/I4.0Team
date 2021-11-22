@@ -1,0 +1,12 @@
+<svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" width="104" height="34" viewBox="0 0 104 34">
+  <defs>
+    <pattern id="pattern" preserveAspectRatio="none" width="100%" height="100%" viewBox="0 0 284 167">
+      <image width="284" height="167" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARwAAACnCAYAAADDjuPiAAAACXBIWXMAAAsSAAALEgHS3X78AAADKklEQVR42u3dwW3TYACG4a8o92YDPAAhbNBuwAjNBkTyACR3ImUDwgZlg3SDWl4gI5QJwgFTIcSB0P7GdZ5HyqWH6Nfn5FUOlX1xPB4DUNpsvplevHn7aZvk3QDPd9829XJkgy+SLHz0zsKybep7MySz+aZKskpSTbrYXJmlF5Wtz8ZUaB5Dc9P96W7icwEUDs0jwQGKh0ZwgN5CIzhAb6ERHKC30AgOcGpopl1oPvzrewgO8DehWXavy6e8l+AAxUMjOEBvoREcoLfQCA7QW2gEB4Smt9AIDghNb6ERHBCa3gkOCI3gAM8Sm2V+/Hfw5RDOIzgwztAsutC8HtK5BAfGF5vbJO+HeLZXLg+MzmBvbyo4gOAAggMgOIDgAAgOIDiA4AAIDiA4AIIDCA4gOACCAwgOgOAAggOcFbcY7dchyZ0ZzsKDCQTnv2qbepdkZ4nT/bwpeNvUlTUEB4qGJgN7+gCCg9AgOHBSaK670FxZQ3BAaBAchAbBAaFBcBAaBAehQXBAaBAchAbBQWiEBsGhXGiqLjQ31kBwEBoEB6FBcEBoEByEBsFBaEBwEBoEh2HHZpHksyV4bp7awJ9UJkBwAMEBEBxAcADBARAcQHAABAcQHEBwAAQHEBwAwQEEB0BwAMEBBAdAcADBARAcQHAAwQEQHEBwAAQHEBxAcAAEBxAcAMEBBAcQHADBAQQHQHAAwQEEB0BwAMEBEBxAcAAEBxAcQHAABAcQHADBAQTnF9+SbF0eEJzSoVknqdqmvnV5YFwmA/tFs22b+sFlAcERGuBFBkdoQHCEBnj5wREaoHhwhAYoHhyhAXoJzlpogNLB+ZJk1Tb1waxAqeAIDVA8OEIDFA+O0ADFgyM0QPHgCA1QPDhCAxQPjtAAxYPzNclSaICSwdl3v2j25gBKB+c6ycfZfGONYVi3Tb0yA2PkqQ2A4ACCAyA4gOAACA4gOIDgAAgOIDgAggMIDiA4AIIDCA6A4ACCAwgOgOAAggMgOIDgAIIDIDiA4AAIDiA4gOAACA4gOACCAwgOgOAAggMIDoDgAIID8JtJkl2SvSkGY+8MPNFQv9OH7z6WxfEISRdpAAAAAElFTkSuQmCC"/>
+    </pattern>
+  </defs>
+  <g id="Group_53" data-name="Group 53" transform="translate(-118 -17)">
+    <text id="Palette" transform="translate(178 35)" fill="#f58220" font-size="18" font-family="BwModelicaLTI-Bold, Bw Modelica LTI" font-weight="700"><tspan x="-31.923" y="0">Palette</tspan></text>
+    <text id="Smart_Manufacturing" data-name="Smart Manufacturing" transform="translate(170 48)" fill="#404040" font-size="10" font-family="BwModelica-Regular, Bw Modelica"><tspan x="-51.79" y="0">Smart Manufacturing</tspan></text>
+    <rect id="LTI_logo_logo" width="23" height="14" transform="translate(118 21)" fill="url(#pattern)"/>
+  </g>
+</svg>

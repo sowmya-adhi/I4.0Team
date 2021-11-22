@@ -1,0 +1,166 @@
+<br>
+<br>
+<br>
+<div
+  class="row"
+  style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px"
+>
+  <div class=".col col-xl-12 text-xs-center">
+    <div class="card mb-3">
+      <div class="card-header bg-white">
+        <div class="row">
+          <div class="col" style="margin-right: 5%">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01"
+                  >Area</label
+                >
+              </div>
+              <select
+                class="custom-select"
+                id="inputGroupSelect01"
+                (change)="changedArea($any($event.target).value)"
+                required
+                ng-model="myArea"
+              >
+                <option selected>Select an Area</option>
+                <br />
+                <option *ngFor="let a of area_arr" [value]="a.Assessment_Area">{{ a.Assessment_Area }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01"
+                  >Category</label
+                >
+              </div>
+              <select
+                class="custom-select"
+                id="inputGroupSelect01"
+                required
+                ng-model="myCategory"
+                (change)="changedCategory($any($event.target).value)"
+              >
+                <option selected>Select a Category</option>
+                <br />
+                <option *ngFor="let c of category" [value]="c.Category"> {{c.Category}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-check">
+            <div *ngFor="let q of selected_qs">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="flexCheckDefault"
+                name="{{ q.Question }}"
+                (change)="onchange()"
+                [(ngModel)]="q.isselected"
+              />
+              <label class="form-check-label" for="flexCheckDefault">
+               <h3>{{ q.Question }} </h3> 
+              </label>
+            </div>
+          </div>
+        </div>
+
+      <br />
+      <br />
+      <br />
+
+      <div class="wrapper">
+        <button
+          type="button"
+          class="btn btn-success"
+          style="margin-right: 2%"
+          (click)="popup = true"
+          (click)="count_fn()"
+        >
+          Import Questions
+        </button>
+        <!-- <button type="button" class="btn btn-info" (click)="view=true" >View my Items</button> -->
+      </div>
+
+      <div class="overlay" *ngIf="popup">
+        <div class="popup">
+          
+          <a class="close" (click)="popup = false">&times;</a>
+          <div class="content">
+             <h2> <b> {{ count }} </b> Questions has been imported Succesfully !!! </h2> 
+          </div>
+        </div>
+      </div>
+
+      <!-- <div *ngIf="view">
+      <table>
+        <tr>
+          <td> <b>Area</b>  </td>
+          <td> <b>Category</b></td>
+          <td> <b>Questions</b></td>
+        </tr>
+        <tr *ngFor="let i of selected_id">
+          <td> {{i.Area}}</td>
+          <td>{{i.Category}}</td>
+          <td>{{i.Question}}</td>
+        </tr>
+      </table>
+
+      </div> -->
+
+      <div class="row">
+        <table class="table table-bordered table-light table-striped table-hover table-borderless">
+            <thead>
+                <tr>
+                    <th scope="col">Area</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Question</th>
+                    <!-- <th scope="col"></th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    class="accordion-toggle collapsed"
+                    id="accordion1"
+                    data-toggle="collapse"
+                    data-parent="#accordion1"
+                     *ngFor="let i of selected_id"
+                >
+                    <td> {{i.Area}}</td>
+                    <td>{{i.Category}}</td>
+                    <td>{{i.Question}}</td>
+                    <!-- <td>
+                        <button type="button" class=""  (click)="editdata(question.Key)"
+                          style="outline-color: transparent;border-color: transparent;">
+                          <i class="fa fa-ellipsis-v "></i></button>
+                      </td> -->
+                      <!-- <td>
+                        <button  type="button" class="btn btn-danger btn-sm mr-2" data-toggle="modal"
+                          (click)="assignDeleteAssetId(question.Key)">
+                          <i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button class="btn btn-warning btn-sm" 
+                        (click)="editdata(question.Key)"
+                          >
+                          <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                      </td> -->
+                    <!-- <td>lksj;sdajf;</td>
+                    <td>sl;djf;lsdfjk</td>
+                    <td>slfls;dfk</td>
+                    <td>sf;lsdkf</td>
+                    <td>sdfl'sfldsd</td> -->
+               
+            </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- </div> -->
+

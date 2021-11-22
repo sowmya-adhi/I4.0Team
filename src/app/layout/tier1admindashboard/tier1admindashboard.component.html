@@ -1,0 +1,291 @@
+<!-- <div [@routerTransition]> -->
+<div class="row card-header nav2">
+    <div>
+        <h5 class="twinname">
+            {{'I4.0 ASSESSMENT' | translate}}
+        </h5>
+    </div>
+    <div>
+        <h5 class="pipesymbol">
+            |
+        </h5>
+    </div>
+    <div style="margin-left: 40px;">
+        <a>
+            <button class="navbutton" (click)=setActiveDiv(1) [class]=" userBool ? 'activeclass' : '' ">
+                <h5 class="nav2text">{{'CUSTOMERS' | translate}}</h5>
+            </button>
+        </a>
+    </div>
+    <div style="margin-left: 40px;">
+        <a><button class="navbutton" (click)=setActiveDiv(2) [class]=" scopeBool ? 'activeclass' : '' ">
+                <h5 class="nav2text">{{'ASSESSMENT' | translate}}</h5>
+            </button></a>
+    </div>
+    <div style="margin-left: 40px;">
+        <a><button class="navbutton" (click)=setActiveDiv(3) [class]=" roleBool ? 'activeclass' : '' ">
+                <h5 class="nav2text">{{'RESULT' | translate}}</h5>
+            </button></a>
+    </div>
+</div>
+
+<div *ngIf="userBool">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 60px;">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto horizontal">
+
+                <li (click)="setActiveParamDiv(1)">
+                    <button class="paramBtn mr-2" [class]=" NewBool ? 'activeParameter' : '' ">
+                        New
+                    </button>
+                </li>
+                <li (click)="setActiveParamDiv(2)">
+                    <button class="paramBtn mr-2" [class]=" ScheduledBool ? 'activeParameter' : '' ">
+                        Scheduled
+                    </button>
+                </li>
+                <li (click)="setActiveParamDiv(3)">
+                    <button class="paramBtn mr-2" [class]=" CompletedBool ? 'activeParameter' : '' ">
+                        Completed
+                    </button>
+                </li>
+            </ul>
+            <div *ngIf="userBool && NewBool">
+                <button [disabled]="User2Bool" type="button" class="btn btn-success" style="margin-right: 30px;"
+                    (click)="gotoiassessment()">
+                    {{'+ Add' | translate}}
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div *ngIf="userBool">
+        <div *ngIf="NewBool">
+            <div class="mt-3 ml-5 mr-5">
+                <!-- 
+            <div class="row">
+                <div class="col col-xl-6 p-3">
+                    <h5>{{'List of Onboarded' | translate}}</h5>
+                </div>
+            </div> -->
+                <div>
+                    <table class="table table-bordered table-light table-striped table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">{{'Customer ID' | translate}}</th>
+                                <th scope="col">{{'Organization' | translate}}</th>
+                                <th scope="col">{{'Business Unit' | translate}}</th>
+                                <th scope="col">{{'Sector' | translate}}</th>
+                                <th scope="col"></th>
+                                <!-- <th scope="col">{{'Asset Description' | translate}}</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr *ngFor="let customer of CustomerData">
+                                <td>{{customer.Customer_Id}}</td>
+                                <td>{{customer.Organization}}</td>
+                                <td>{{customer.Business_Unit}}</td>
+                                <td>{{customer.Sector}}</td>
+                                <td>
+                                    <div *ngIf="User1Bool">
+
+                                        <button  class="btn btn-warning btn-sm"
+                                        style="margin-right: 5%;">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i></button>
+
+                                        <button type="button" class="btn btn-success"
+                                            style="margin-right: 30px;">
+                                            {{'Review & Schedule' | translate}}
+                                        </button>
+                                    </div>
+                                    <div *ngIf="User2Bool">
+
+                                        <button class="btn btn-info btn-sm"
+                                            style="margin-right: 5%;">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-success"
+                                            style="margin-right: 30px;" (click)="gotoquestionselection()">
+                                            {{'Create Assessment' | translate}}
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        
+                            <!-- <div *ngIf="showDetailsBool">
+
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2">
+                                        <div class="row">
+                                        <div class="col">
+                                            <div class="col-2">{{'Attribute Name' | translate}}</div>
+                                            <div class="col-4">{{'Attribute Value' | translate}}</div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="col-2">{{assettype.key_name}}</div>
+                                            <div class="col-6 ">{{assettype.key_value}}</div>
+    
+                                        </div>
+                                    </div> 
+
+                                    </td>
+                                </tr>
+                            </div> -->
+                            
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="ScheduledBool">
+            <div class="mt-3 ml-5 mr-5">
+
+                <div>
+                    <table class="table table-bordered table-light table-striped table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">{{'Respondent ID' | translate}}</th>
+                                <th scope="col">{{'Respondent' | translate}}</th>
+                                <th scope="col">{{'Role' | translate}}</th>
+                                <!-- <th scope="col">{{'Organization' | translate}}</th> -->
+                                <th scope="col">{{'Date of Assesment' | translate}}</th>
+                                <th scope="col"></th>
+                                <!-- <th scope="col">{{'Asset Description' | translate}}</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let respondent of RespondentData">
+                                <td>{{respondent.Respondent_Id}}</td>
+                                <td>{{respondent.Name}}</td>
+                                <td>{{respondent.Role}}</td>
+                                <td>{{respondent.AssessmentDate}}</td>
+                                <td>
+                                   
+                                    <button class="btn btn-info btn-sm" style="margin-right: 5%;">
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                                        <div *ngIf="User1Bool">
+                                    <button class="btn btn-warning btn-sm">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                        </div>
+
+                                </td>
+                            </tr>
+                            <div *ngIf="showDetailsBool">
+
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2">
+
+
+                                    </td>
+                                </tr>
+                            </div>
+                            
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="CompletedBool">
+            <!-- <div class="mt-3 ml-5 mr-5">
+
+                <div>
+                    <table class="table table-bordered table-light table-striped table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">{{'Customer ID' | translate}}</th>
+                                <th scope="col">{{'Organization' | translate}}</th>
+                                <th scope="col">{{'Business Unit' | translate}}</th>
+                                <th scope="col">{{'Sector' | translate}}</th>
+                                <th scope="col"></th>
+                                <th scope="col">{{'Asset Description' | translate}}</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0001</td>
+                                <td>Honda</td>
+                                <td>Data</td>
+                                <td>Software</td>
+                                <td>
+                                    <button type="button" class="" data-toggle="modal" data-target="#edit"
+                                        (click)="showCustomerDetails()"
+                                        style="outline-color: transparent;border-color: transparent; background-color: transparent;">
+                                        <i class="fa fa-ellipsis-v "></i></button>
+                                </td>
+                            </tr>
+                            <div *ngIf="showDetailsBool">
+
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2">
+
+
+                                    </td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td>
+                                    <a style="color: #000E8C;" routerLink="/form">0002</a>
+                                </td>
+                                <td>Citi</td>
+                                <td>A2</td>
+                                <td>Insurance</td>
+                                <td>
+                                    <button type="button" class="" data-toggle="modal" data-target="#edit"
+                                        (click)="showCustomerDetails()"
+                                        style="outline-color: transparent;border-color: transparent; background-color: transparent;">
+                                        <i class="fa fa-ellipsis-v "></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a style="color: #000E8C;" routerLink="/form">0003</a>
+                                </td>
+                                <td>Clarios</td>
+                                <td>Manufacturing</td>
+                                <td>Network manufacturing</td>
+                                <td>
+                                    <button type="button" class="" data-toggle="modal" data-target="#edit"
+                                        (click)="showCustomerDetails()"
+                                        style="outline-color: transparent;border-color: transparent; background-color: transparent;">
+                                        <i class="fa fa-ellipsis-v "></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a style="color: #000E8C;" routerLink="/form">0004</a>
+                                </td>
+                                <td>Chevron</td>
+                                <td>M1</td>
+                                <td>Logistics</td>
+                                <td>
+                                    <button type="button" class="" data-toggle="modal" data-target="#edit"
+                                        (click)="showCustomerDetails()"
+                                        style="outline-color: transparent;border-color: transparent; background-color: transparent;">
+                                        <i class="fa fa-ellipsis-v "></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+<div *ngIf="scopeBool">
+    
+    <app-question-dashboard></app-question-dashboard>
+
+</div>
+
+<div *ngIf="roleBool">
+    tab 3
+
+</div>
+<!-- </div> -->

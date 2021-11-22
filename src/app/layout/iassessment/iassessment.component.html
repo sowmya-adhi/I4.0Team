@@ -1,0 +1,148 @@
+<div class="userBoolClass">
+  <div class=".col col-xl-12 text-xs-center" style=" margin-left: 30px; margin-top: 60px; width: 95%;">
+    <div class="card mb-3">
+      <div class="card-header bg-white " style="height: 50px;">
+
+        <h2>
+          <bold>CUSTOMER DETAILS</bold>
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px;">
+    <div class=".col col-xl-12 text-xs-center">
+      <div class="card mb-3">
+        <div class="card-header bg-white ">
+          <form #scopeForm="ngForm">
+            <div class="row">
+              <div class="col" style="margin-right: 5%;">
+                <label for="organization">{{'Organization' | translate}}<span style="color: red;">*</span></label>
+                <input type="text" id="organization" class="form-control" name="organization" [(ngModel)]="CUSTOMER.organization"
+                  required />
+                <!-- <label for="assessment_area">{{'Area of Assessment' | translate}}<span
+                    style="color: red;">*</span></label>
+                <input type="text" id="assessment_area" class="form-control" name="assessment_area" [(ngModel)]="SCOPE.assessment_area" required>
+                <select class="custom-select" id="assessment_area" class="form-control" name="assessment_area"
+                [(ngModel)]="SCOPE.assessment_area" required>
+                  <option *ngFor="let a of assessment_area_array" value="{{a.area}}">{{a.area}}</option>
+                </select> -->
+
+              </div>
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <div class="col">
+                <label for="org_size">{{'Organization Size' | translate}}<span style="color: red;">*</span></label>
+                <input type="text" id="org_size" class="form-control" name="org_size" [(ngModel)]="CUSTOMER.org_size" required>
+                
+              </div>
+            </div>
+            <br>
+
+            <div class="row">
+              <div class="col" style="margin-right: 5%;">
+
+                <label for="business_unit">{{'Business Unit' | translate}}<span style="color: red;">*</span></label>
+                <input type="text" id="business_unit" class="form-control" name="business_unit" [(ngModel)]="CUSTOMER.business_unit" required>
+
+              </div>
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <div class="col">
+
+                <label for="assessment_scope">{{'Scope of Assessment'}}<span style="color: red;">*</span></label>
+
+                <select class="custom-select" id="assessment_scope" class="form-control" name="assessment_scope"
+                [(ngModel)]="CUSTOMER.assessment_scope" required>
+                  <option *ngFor="let a of assessment_scope_array" value="{{a.scope}}">{{a.scope}}</option>
+                </select>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col" style="margin-right: 5%;">
+
+                <label for="sector">{{'Sector' | translate}}<span style="color: red;">*</span></label>
+                <select class="custom-select" id="sector" class="form-control" name="sector"  [(ngModel)]="CUSTOMER.sector" required>
+                  <option *ngFor="let s of sector_array" value="{{s.sector}}">{{s.sector}}</option>
+                </select>
+                <!-- <span ng-show="!somefield">Sorry, the field is empty!</span>
+                <span ng-hide="!somefield">Thanks. Successfully validated!</span> -->
+
+              </div>
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <div class="col">
+
+                <label for="cloud_provider">{{'Cloud Provider' | translate}}<span style="color: red;">*</span></label>
+                <select class="custom-select" id="cloud_provider" class="form-control" name="cloud_provider"
+                [(ngModel)]="CUSTOMER.cloud_provider" required>
+                  <option *ngFor="let c of cloud_provider_array" value="{{c.cloud_provider}}">{{c.cloud_provider}}
+                  </option>
+                </select>
+
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col" style="margin-right: 5%;">
+
+                <label for="geography">{{'Geography' | translate}}<span style="color: red;">*</span></label>
+                <select class="custom-select" id="geography" class="form-control" name="condition" [(ngModel)]="CUSTOMER.geography"
+                  required>
+                  <option *ngFor="let g of geography_array" value="{{g.geography}}">{{g.geography}}</option>
+                </select>
+
+              </div>
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+              <div class="col">
+
+                <label for="key_components">{{'Key Components' | translate}}<span style="color: red;">*</span></label>
+                <input type="text" id="key_components" class="form-control" name="key_components" [(ngModel)]="CUSTOMER.key_components" required>
+
+              </div>
+            </div>
+            <br>
+            <!-- <div class="row">
+              <div class="col" style="margin-right: 52%;">
+
+                <label for="sector">{{'Sector' | translate}}<span style="color: red;">*</span></label>
+                <select class="custom-select" id="sector" class="form-control" name="sector"  [(ngModel)]="SCOPE.sector" required>
+                  <option *ngFor="let s of sector_array" value="{{s.sector}}">{{s.sector}}</option>
+                </select>
+                
+              </div>
+            </div> -->
+            <br>
+            <div class="row">
+              <div class="col text-center">
+                <button class="btn btn-success" style="font: normal normal bold 12px/15px Lato; width: 20%;"
+                  (click)="gotoDetails()">
+                  {{'Add' | translate}}
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="row" style="margin-left: 30px; margin-right: 30px; margin-bottom: 10px; margin-top: 50px;">
+  <div class=".col col-xl-12 text-xs-center">
+    <div class="card mb-3">
+      <div class="card-header bg-white ">
+        <form #scopeForm="ngForm">
+        <div class="row">
+          <div class="col">
+
+            <label for="assessment_area">{{'Area of Assessment' | translate}}<span style="color: red;">*</span></label>
+            <input type="text" id="assessment_area" class="form-control" name="assessment_area" #assessment_area>
+              [(ngModel)]="SCOPE.assessment_area" required #assessment_area="ngModel">
+             <button class="btn btn-success" style="font: normal normal bold 12px/15px Lato;" (click)="gotoDetails(assessment_area.value)">
+              {{'Next' | translate}}
+            </button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div> -->
