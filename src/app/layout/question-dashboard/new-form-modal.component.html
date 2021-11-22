@@ -1,126 +1,223 @@
 <div class="modal-header">
     <h1 class="modal-title">Add New Question</h1>
 </div>
-<form [formGroup]="myForm"  class="form-horizontal">
+<form [formGroup]="myForm" class="form-horizontal">
     <div class="modal-body">
         <div class="container-fluid">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-3"><label for="area">Area</label></div>
-                    <!-- <div class="col-6"><input type="text"  class="form-control" formControlName="username" /></div> -->
-                  
-                    <div class="col-8">
-                        <select
-                            *ngIf="!addArea"
-                            class="form-control form-select"
-                            formControlName="area"
-                            (change)="AreaChanged($any($event.target).value)"
-                        >
-                            <option *ngFor="let area of area_arr" [value]="area['Assessment_Area']">{{ area['Assessment_Area'] }}</option>
-                        </select>
-                        <div *ngIf="addArea">
-                        <input
-                            #AreaInput
-                            type="text"
-                            class="form-control"
-                            formControlName="area"
-                            placeholder="Enter new Area"
-                        />
-                        <button class="btn btn-primary" (click)="insertNewArea(AreaInput.value)"><i class="fa fa-check"></i></button>
-                        <button class="btn btn-danger" (click)="toggleAddArea()"><i class="fa fa-chevron-left"></i></button>
-                    </div>
-                    </div>
-               
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-3"><label for="category">Category</label></div>
-                    <!-- <div class="col-6"><input type="text"  class="form-control" formControlName="username" /></div> -->
-                    <div class="col-8">
-                        <select
-                            *ngIf="!addCategory"
-                            class="form-control form-select"
-                            formControlName="category"
-                            (change)="categoryChanged($any($event.target).value)"
-                        >
-                            <option *ngFor="let category of categories_arr" [value]="category['CategoryName']">{{ category['CategoryName'] }}</option>
-                        </select>
-                        <div *ngIf="addCategory">
-                        <input
-                            #CategoryInput
-                            type="text"
-                            class="form-control"
-                            formControlName="category"
-                            placeholder="Enter new Category"
-                        />
-                        <button class="btn btn-primary" (click)="insertNewCategory(CategoryInput.value)"><i class="fa fa-check"></i></button>
-                        <button *ngIf="!emptyCategory " class="btn btn-danger" (click)="toggleAddCategory()"><i class="fa fa-chevron-left"></i></button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-3"><label for="question">Question</label></div>
+            <div *ngIf="firstHalf">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3"><label for="area">Assessment Area</label></div>
+                        <!-- <div class="col-6"><input type="text"  class="form-control" formControlName="username" /></div> -->
 
+                        <div class="col-8">
+                            <select
+                                *ngIf="!addArea"
+                                class="form-control form-select"
+                                formControlName="area"
+                                (change)="AreaChanged($any($event.target).value, 0)"
+                            >
+                                <option *ngFor="let area of area_arr" [value]="area['Assessment_Area']">{{
+                                    area['Assessment_Area']
+                                }}</option>
+                            </select>
+                            <div *ngIf="addArea">
+                                <input
+                                    #AreaInput
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="area"
+                                    placeholder="Enter new Area"
+                                />
+                                <button class="btn btn-primary" (click)="insertNewArea(AreaInput.value)">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button class="btn btn-danger" (click)="toggleAddArea()">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3"><label for="category">Category</label></div>
+                        <!-- <div class="col-6"><input type="text"  class="form-control" formControlName="username" /></div> -->
+                        <div class="col-8">
+                            <select
+                                *ngIf="!addCategory"
+                                class="form-control form-select"
+                                formControlName="category"
+                                (change)="categoryChanged($any($event.target).value)"
+                            >
+                                <option *ngFor="let category of categories_arr" [value]="category['CategoryName']">{{
+                                    category['CategoryName']
+                                }}</option>
+                            </select>
+                            <div *ngIf="addCategory">
+                                <input
+                                    #CategoryInput
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="category"
+                                    placeholder="Enter new Category"
+                                />
+                                <button class="btn btn-primary" (click)="insertNewCategory(CategoryInput.value)">
+                                    <i class="fa fa-check"></i>
+                                </button>
+                                <button *ngIf="!emptyCategory" class="btn btn-danger" (click)="toggleAddCategory()">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3"><label for="question">Question</label></div>
+
+                        <div class="col-8">
+                            <textarea
+                                type="textarea"
+                                class="form-control"
+                                formControlName="question"
+                                placeholder="Enter new Question"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3"><label for="statement">Statement</label></div>
+
+                        <div class="col-8">
+                            <textarea
+                                type="textarea"
+                                class="form-control"
+                                formControlName="statement"
+                                placeholder="Enter new Question"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3"><label for="weight">Weight</label></div>
+
+                        <div class="col-8">
+                            <select class="form-control form-select" formControlName="weight">
+                                <option *ngFor="let weight of weights" [value]="weight">{{ weight + '%' }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3"><label for="target_score ">Target Score</label></div>
+
+                        <div class="col-8">
+                            <select class="form-control form-select" formControlName="target_score">
+                                <option *ngFor="let target_score of target_scores" [value]="target_score">{{
+                                    target_score
+                                }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-3"><label for="Question_Type ">Question Type</label></div>
+
+                        <div class="col-8">
+                            <select class="form-control form-select" formControlName="Question_Type">
+                                <option *ngFor="let type of types" [value]="type">{{
+                                    type
+                                }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <button class="btn btn-success" (click)="QuestionPost()">
+                        Continue <i class="fa fa-forward"></i>
+                    </button>
+
+                    <button class="btn btn-danger" (click)="activeModal.dismiss('Close clicked')">
+                        Close
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="!firstHalf">
+                <div class="row">
+                    <div class="col-4"><label for="option1">Option for Maturity Level1</label></div>
                     <div class="col-8">
                         <textarea
                             type="textarea"
                             class="form-control"
-                            formControlName="question"
-                            placeholder="Enter new Question"
-                            rows="4"
+                            formControlName="option1"
+                            placeholder="Enter option"
+                            rows="2"
                         ></textarea>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
                 <div class="row">
-                    <div class="col-3"><label for="statement">Statement</label></div>
-
+                    <div class="col-4"><label for="option2">Option for Maturity Level2</label></div>
                     <div class="col-8">
                         <textarea
                             type="textarea"
                             class="form-control"
-                            formControlName="statement"
-                            placeholder="Enter new Question"
-                            rows="4"
+                            formControlName="option2"
+                            placeholder="Enter option"
+                            rows="2"
                         ></textarea>
                     </div>
                 </div>
-            </div>
-            <!-- <div class="form-group">
                 <div class="row">
-                    <div class="col-3"><label for="weight">Weight</label></div>
-
+                    <div class="col-4"><label for="option3">Option for Maturity Level3</label></div>
                     <div class="col-8">
-                        <select class="form-control form-select" formControlName="weight">
-                            <option *ngFor="let weight of weights" [value]="weight">{{ weight + '%' }}</option>
-                        </select>
+                        <textarea
+                            type="textarea"
+                            class="form-control"
+                            formControlName="option3"
+                            placeholder="Enter option"
+                            rows="2"
+                        ></textarea>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
                 <div class="row">
-                    <div class="col-3"><label for="target_score ">Target Score</label></div>
-
+                    <div class="col-4"><label for="option4">Option for Maturity Level4</label></div>
                     <div class="col-8">
-                        <select class="form-control form-select" formControlName="target_score">
-                            <option *ngFor="let target_score of target_scores" [value]="target_score">{{
-                                target_score
-                            }}</option>
-                        </select>
+                        <textarea
+                            type="textarea"
+                            class="form-control"
+                            formControlName="option4"
+                            placeholder="Enter option"
+                            rows="2"
+                        ></textarea>
                     </div>
                 </div>
-            </div> -->
-            <div class="modal-footer">
-                <button class="btn btn-success" (click)="submitForm()" [disabled]="!myForm.valid">
-                    Submit Form
-                </button>
-                <button class="btn btn-danger" (click)="activeModal.dismiss('Close clicked')">
-                    Close
-                </button>
+                <div class="row">
+                    <div class="col-4"><label for="option5">Option for Maturity Level5</label></div>
+                    <div class="col-8">
+                        <textarea
+                            type="textarea"
+                            class="form-control"
+                            formControlName="option5"
+                            placeholder="Enter option"
+                            rows="2"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" (click)="submitForm()" [disabled]="!myForm.valid">
+                        Submit Form
+                    </button>
+                    <button class="btn btn-danger" (click)="activeModal.dismiss('Close clicked')">
+                        Close
+                    </button>
+                </div>
             </div>
         </div>
     </div>

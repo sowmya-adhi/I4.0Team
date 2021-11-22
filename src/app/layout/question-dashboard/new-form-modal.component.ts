@@ -24,12 +24,14 @@ export class NewFormModalComponent implements OnInit {
         CategoryName: string,
         CategoryID: string
     }>=[];
+    firstHalf:boolean=true
+    secondHalf:boolean=false
     emptyCategory:boolean=false
     addArea: boolean = false;
     addCategory: boolean = false;
     current_val: any;
     myForm!: FormGroup;
-    weights: any = [5, 10, 20, 30];
+    weights: any = [5, 10,15, 20, 30];
     target_scores: any = [1, 2, 3, 4, 5];
     categories: any;
     selected_area: any;
@@ -56,12 +58,14 @@ export class NewFormModalComponent implements OnInit {
             'Security'
         ]
     };
+    types:Array<string> =['Single Correct','Text']
     areas: any = ['Organional Readiness', 'Data Readiness', 'Infra Readiness', 'Add New Area'];
     selected_category: any;
+    new_question_id:any
     constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder,private CONSTANT: Constant, private HTTPSERVICE: HttpService, private httpclient : HttpClient) {}
 
     ngOnInit(): void {
-        const getSubscribe = this.HTTPSERVICE.get(this.CONSTANT.Assessment_Area_API);
+        const getSubscribe = this.HTTPSERVICE.get(this.CONSTANT.AssessmentArea_API);
         getSubscribe.subscribe(
             (data: Array<{
               Assessment_Area_Id: string,
@@ -82,8 +86,11 @@ export class NewFormModalComponent implements OnInit {
             },
         );
         this.createForm();
-    }
+        console.log("selcted_area ="+this.selected_area)
+        this.myForm.get("area").setValue(this.selected_area)
+       }
     insertNewArea(val: any){
+        this.selected_area=val
         console.log("insert new area has been click with value: "+val)
         console.log("insert new area has been clicked with value "+val)
         const getSubscribe = this.HTTPSERVICE.post(this.CONSTANT.AssessmentArea_API,{
@@ -101,6 +108,7 @@ export class NewFormModalComponent implements OnInit {
         
     }
     insertNewCategory(val:any){
+        this.selected_category=val
         let area_id:number ;
         for(let i=0;i<this.area_arr.length;i++){
             if(this.area_arr[i]["Assessment_Area"]===this.selected_area)
@@ -113,10 +121,10 @@ export class NewFormModalComponent implements OnInit {
           });
           getSubscribe.subscribe((data: any)=>{
               console.log("Category data added successfully!!");
-              this.area_arr=[]
+             // this.area_arr=[]
               this.addArea=false
               this.addCategory=false
-              this.ngOnInit();
+              this.AreaChanged(this.selected_area,1)
           });
     }
     toggleAddArea(){
@@ -143,11 +151,44 @@ export class NewFormModalComponent implements OnInit {
             category: '',
             question: '',
             statement:"",
+            weight:undefined,
+            target_score:undefined,
+            Question_Type:"",
+            option1:"",
+            option2:"",
+            option3:"",
+            option4:"",
+            option5:"",
            
         });
     }
     submitForm() {
-         let area_id:number ;
+         console.log(this.new_question_id)
+
+         let options:Array<{
+            Option:string,
+            Question_Id:number,
+            Maturity_Level:number
+         }>=[]
+         
+         options.push({Option: this.myForm.get("option1").value,Question_Id:this.new_question_id,Maturity_Level:1})
+         options.push({Option: this.myForm.get("option2").value,Question_Id:this.new_question_id,Maturity_Level:2})
+         options.push({Option: this.myForm.get("option3").value,Question_Id:this.new_question_id,Maturity_Level:3})
+         options.push({Option: this.myForm.get("option4").value,Question_Id:this.new_question_id,Maturity_Level:4})
+         options.push({Option: this.myForm.get("option5").value,Question_Id:this.new_question_id,Maturity_Level:5})
+         console.log(options)
+        for(let i=0;i<options.length;i++){
+            const getSubscribe = this.HTTPSERVICE.post(this.CONSTANT.Question_Option_Api,options[i]);
+            getSubscribe.subscribe((data: any)=>{
+              console.log("option"+i+" for question id:"+options[i]["Question_Id"]+"has been uploaded!!");
+          });
+        }
+        this.activeModal.close(this.myForm.value);
+       
+      
+    }
+    QuestionPost(){
+        let area_id:number ;
         for(let i=0;i<this.area_arr.length;i++){
             if(this.area_arr[i]["Assessment_Area"]===this.selected_area)
                 area_id=Number(this.area_arr[i]["Assessment_Area_Id"])
@@ -161,37 +202,52 @@ export class NewFormModalComponent implements OnInit {
                 cat_id=Number(this.categories_arr[i]["CategoryID"])
             }
         }
+        let q_t_id:number;
+        if(this.myForm.get("Question_Type").value==="Single Correct"){
+            q_t_id=1
+        }
+        else{
+            q_t_id=2
+        }
         let body:any={
             "Question": this.myForm.get("question").value,
             "Statement": this.myForm.get("statement").value,
-            "Key": "I4.0"+this.selected_area+this.selected_category,
             "Category_Id": cat_id,
             "Assessment_Area_Id":area_id,
-            "Question_Type_Id": 3,
-            "Weightage":2
+            "Question_Type_Id": q_t_id,
+            "Weightage":Number(this.myForm.get("weight").value),
+            "Target_Score":Number(this.myForm.get("target_score").value)
             
           }
           console.log(body)
         const getSubscribe = this.HTTPSERVICE.post(this.CONSTANT.Question_API,body);
           getSubscribe.subscribe((data: any)=>{
             console.log("Question added successfully!!");
-            this.activeModal.close(this.myForm.value);
+            console.log("data received back after posting the question")
+            console.log(data)
+            //this.activeModal.close(this.myForm.value);
+            this.new_question_id=data["Question_Id"]
+            
+            this.firstHalf=!this.firstHalf
+            if(q_t_id===2){
+                alert("Question has been successfully added!!!")
+                this.activeModal.dismiss("done")
+            }
         });
-        
-        
-       
-      
     }
 
     closeModal() {
        // this.activeModal.close('Modal Closed');
        this.ngOnInit()
     }
-    AreaChanged(val: any) {
+    AreaChanged(val: any,from:any) {
         this.addCategory=false
         this.emptyCategory=false
-        this.myForm.get("category").setValue("")
-        console.log('onchange is working value received:'+val);
+        if(from===0){
+             this.myForm.get("category").setValue("")
+             this.selected_category=""
+        }
+        console.log('Area onchange is working value received:'+val);
         if (val === 'Add New Area') {
             this.myForm.get('area').setValue("")
             this.myForm.get('category').setValue("")
@@ -222,6 +278,7 @@ export class NewFormModalComponent implements OnInit {
                       this.categories_arr.push({"CategoryID":data[i]["Category_Id"],"CategoryName":data[i]["Category"]})
                   }
                 if(this.categories_arr.length===0){
+                    this.myForm.get("category").setValue("")
                      this.addCategory=!this.addCategory
                      this.emptyCategory=true
                 }
@@ -231,6 +288,7 @@ export class NewFormModalComponent implements OnInit {
                 }
                  // this.CategoryChanged(this.categories[0]["CategoryName"])
                   console.log(this.categories_arr)
+                  this.myForm.get("category").setValue(this.selected_category)
                   
                 },
             );
