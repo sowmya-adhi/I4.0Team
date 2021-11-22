@@ -10,13 +10,17 @@ export class Constant {
     public ASSESSMENT_AREA_API='http://localhost:8080/api/AssessmentArea';
     public Assessment_Area_API='http://localhost:8080/api/AssessmentArea';
 
+    public Question_Option_Api="http://localhost:8080/api/questionoption"
+
+    public Question_Type_Api="http://localhost:8080/api/question_type"
+
     public Category_API='http://localhost:8080/api/Category';
 
     public Question_API='http://localhost:8080/api/question';
 
     public AssessmentArea_API='http://localhost:8080/api/AssessmentArea';
-    public Question_Option_Api="http://localhost:8080/api/questionoption"
-    public Question_Type_Api="http://localhost:8080/api/question_type"
+
+    public AssessmentQuestions_API='http://localhost:8080/api/QuestionAssessment';
 
     // public Category_API="http://localhost:8080/api/Category"
 
