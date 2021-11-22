@@ -114,11 +114,13 @@ export class NewFormModalComponent implements OnInit {
             if(this.area_arr[i]["Assessment_Area"]===this.selected_area)
                 area_id=Number(this.area_arr[i]["Assessment_Area_Id"])
         }
-        const getSubscribe = this.HTTPSERVICE.post(this.CONSTANT.Category_API,{
+        let body: any={
             "Assessment_Area_Id": area_id,
             "Category": val,
             
-          });
+          }
+          console.log(body)
+        const getSubscribe = this.HTTPSERVICE.post(this.CONSTANT.Category_API,body);
           getSubscribe.subscribe((data: any)=>{
               console.log("Category data added successfully!!");
              // this.area_arr=[]

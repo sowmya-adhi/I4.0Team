@@ -23,7 +23,7 @@ import { QuestionDashboardComponent } from './question-dashboard/question-dashbo
 
 @NgModule({
     imports: [ ReactiveFormsModule, FormsModule, CommonModule, LayoutRoutingModule, TranslateModule, NgbDropdownModule,ToastrModule,MatBadgeModule,MatIconModule],
-    declarations: [LayoutComponent, HeaderComponent, FooterComponent, ReadinessOrgComponent,DetailsComponent, FormComponent, IassessmentComponent, AdmindashboardComponent, ResultComponent, Tier1admindashboardComponent, QuestionDashboardComponent ],
+    declarations: [LayoutComponent, HeaderComponent, FooterComponent, ReadinessOrgComponent,DetailsComponent, FormComponent, IassessmentComponent, AdmindashboardComponent, ResultComponent, Tier1admindashboardComponent],
     providers: [{ provide: ToastrService, useValue: ToastrService },]
 })
 export class LayoutModule {}
