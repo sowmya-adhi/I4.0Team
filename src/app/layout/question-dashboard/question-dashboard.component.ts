@@ -115,6 +115,7 @@ export class QuestionDashboardComponent implements OnInit {
         private httpclient: HttpClient
     ) {
         console.log('constructor');
+        
     }
 
     openOptionModal(question_id: any){
@@ -173,7 +174,7 @@ export class QuestionDashboardComponent implements OnInit {
         
         console.log('oninti');
         this.area_arr = [];
-
+        this.dropdown_arr= ['View All'];
         const getSubscribe = this.HTTPSERVICE.get(this.CONSTANT.AssessmentArea_API);
         getSubscribe.subscribe(
             (
@@ -195,7 +196,7 @@ export class QuestionDashboardComponent implements OnInit {
                 console.log(this.area_arr);
             }
         );
-
+        this.category_arr=[]
         this.HTTPSERVICE.get(this.CONSTANT.Category_API).subscribe(
             (
                 data: Array<{
@@ -215,7 +216,7 @@ export class QuestionDashboardComponent implements OnInit {
                 console.log(this.category_arr);
             }
         );
-
+        this.question_arr=[]
         this.HTTPSERVICE.get(this.CONSTANT.Question_API).subscribe(
             (
                 data: Array<{
@@ -249,6 +250,7 @@ export class QuestionDashboardComponent implements OnInit {
         );
         await this.delay(1100);
         console.log('after 200ms delay');
+        this.filtered_question_arr=[]
         for (let i = 0; i < this.question_arr.length; i++) {
             let areaname: string;
             let categoryname: string;
@@ -300,9 +302,13 @@ export class QuestionDashboardComponent implements OnInit {
             .then((result) => {
                 console.log('from new-q-component');
                 console.log(result);
+                this.ngOnInit();
             })
             .catch((error) => {
                 console.log('Error:' + error);
+                if(error==='Done'){
+                    this.ngOnInit();
+                }
             });
     }
     // AreaChanged(val: any) {
