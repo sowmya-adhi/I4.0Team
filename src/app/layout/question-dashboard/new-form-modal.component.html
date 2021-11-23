@@ -29,9 +29,9 @@
                                     formControlName="area"
                                     placeholder="Enter new Area"
                                 />
-                                <button class="btn btn-primary" (click)="insertNewArea(AreaInput.value)">
+                                <!-- <button class="btn btn-primary" (click)="insertNewArea(AreaInput.value)">
                                     <i class="fa fa-check"></i>
-                                </button>
+                                </button> -->
                                 <button class="btn btn-danger" (click)="toggleAddArea()">
                                     <i class="fa fa-chevron-left"></i>
                                 </button>
@@ -62,9 +62,9 @@
                                     formControlName="category"
                                     placeholder="Enter new Category"
                                 />
-                                <button class="btn btn-primary" (click)="insertNewCategory(CategoryInput.value)">
+                                <!-- <button class="btn btn-primary" (click)="insertNewCategory(CategoryInput.value)">
                                     <i class="fa fa-check"></i>
-                                </button>
+                                </button> -->
                                 <button *ngIf="!emptyCategory" class="btn btn-danger" (click)="toggleAddCategory()">
                                     <i class="fa fa-chevron-left"></i>
                                 </button>
@@ -96,7 +96,7 @@
                                 type="textarea"
                                 class="form-control"
                                 formControlName="statement"
-                                placeholder="Enter new Question"
+                                placeholder="Enter Statement for the Question"
                                 rows="4"
                             ></textarea>
                         </div>
